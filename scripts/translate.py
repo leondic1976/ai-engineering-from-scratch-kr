@@ -28,7 +28,7 @@ Usage:
     python scripts/translate.py --phase 10-llms-from-scratch
     python scripts/translate.py --only phases/00-setup-and-tooling/01-dev-environment
     python scripts/translate.py --dry-run
-    TRANSLATE_MODEL=gemini-2.5-flash-lite python scripts/translate.py
+    TRANSLATE_MODEL=<model-id> python scripts/translate.py
 """
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ from common import (  # noqa: E402
 PROVIDERS = {
     "gemini": dict(
         base="https://generativelanguage.googleapis.com/v1beta/openai",
-        key_env="GEMINI_API_KEY", model="gemini-2.5-flash", rpm=8,
+        key_env="GEMINI_API_KEY", model="gemini-3.8-flash", rpm=8,
     ),
     "groq": dict(
         base="https://api.groq.com/openai/v1",

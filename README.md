@@ -26,7 +26,7 @@ mkdocs build              정적 사이트 생성           →  site/          
 
 | provider | 환경 변수 | 기본 모델 | 메모 |
 |---|---|---|---|
-| `gemini` (기본) | `GEMINI_API_KEY` | `gemini-2.5-flash` | [AI Studio](https://aistudio.google.com/apikey)에서 무료 키 발급. 한국어 품질 좋음. 일일 한도 때문에 전체 번역에 며칠 소요 (`gemini-2.5-flash-lite`는 한도가 더 큼) |
+| `gemini` (기본) | `GEMINI_API_KEY` | `gemini-3.8-flash` | [AI Studio](https://aistudio.google.com/apikey)에서 무료 키 발급. 한국어 품질 좋음. 일일 한도 때문에 전체 번역에 며칠 소요 (모델이 단종되면 404가 나므로 `--model`로 교체) |
 | `groq` | `GROQ_API_KEY` | `llama-3.3-70b-versatile` | 매우 빠름, 일일 토큰 한도 작음 |
 | `openrouter` | `OPENROUTER_API_KEY` | `meta-llama/llama-3.3-70b-instruct:free` | `:free` 모델만 무료, 목록이 자주 바뀜 → `--model`로 지정 |
 | `cerebras` | `CEREBRAS_API_KEY` | `llama-3.3-70b` | 빠름 |
