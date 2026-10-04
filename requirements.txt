@@ -1,0 +1,3 @@
+# Site build only. The translation scripts use the standard library (urllib) so
+# any free OpenAI-compatible API works without an SDK.
+mkdocs-material>=9.5,<10

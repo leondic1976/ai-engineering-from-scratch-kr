@@ -1,0 +1,14 @@
+# upstream shallow clone (re-fetched by scripts/fetch_source.py)
+source/
+
+# generated MkDocs input/output (rebuilt by scripts/build_site.py / mkdocs build)
+docs/
+site/
+mkdocs.yml
+
+# local secrets
+.env
+
+__pycache__/
+*.pyc
+.venv/

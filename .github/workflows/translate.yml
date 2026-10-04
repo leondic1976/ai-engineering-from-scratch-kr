@@ -1,0 +1,91 @@
+name: Translate lessons (ko)
+
+# Runs 4x/day. Each run resumes from the hash cache, translates until the free-tier
+# daily quota (or the time budget) is hit, commits what it produced, then redeploys
+# the site. Once all lessons are translated it becomes a cheap no-op that only
+# picks up upstream lesson changes.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "gemini | groq | openrouter | cerebras | custom | echo"
+        default: gemini
+      model:
+        description: "model id override (blank = provider default)"
+        default: ""
+      limit:
+        description: "max lessons this run (0 = until quota/time budget)"
+        default: "0"
+      force:
+        description: "retranslate everything (ignore cache)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: translate-ko
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch upstream lessons
+        run: python scripts/fetch_source.py
+
+      - name: Translate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          TRANSLATE_MODEL: ${{ inputs.model || vars.TRANSLATE_MODEL || '' }}
+        run: |
+          python scripts/translate.py \
+            --provider "${{ inputs.provider || vars.TRANSLATE_PROVIDER || 'gemini' }}" \
+            --limit "${{ inputs.limit || '0' }}" \
+            --max-minutes 320 \
+            ${{ inputs.force && '--force' || '' }}
+
+      - name: Commit translations
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "nothing new"
+          else
+            n=$(git diff --cached --name-only -- 'content/ko/phases/**/*.md' | wc -l)
+            git commit -m "translate(ko): ${n} lessons [skip ci]"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    needs: translate
+    if: needs.translate.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
