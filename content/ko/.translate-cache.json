@@ -48,5 +48,15 @@
     "at": "2026-10-07T23:09:58Z",
     "model": "gemini-3.8-flash",
     "sha": "fac7d401a57bbbedba9b980e33524364562d8ef8dcd4ee716be50d7d8aa1e2ea"
+  },
+  "phases/00-setup-and-tooling/11-linux-for-ai": {
+    "at": "2026-10-08T05:58:32Z",
+    "model": "gemini-3.8-flash",
+    "sha": "63127b9a8a6a3c35c4893b7d423e0e220326cbf3fed579c4a59aaabd3fa66f64"
+  },
+  "phases/00-setup-and-tooling/12-debugging-and-profiling": {
+    "at": "2026-10-08T05:58:49Z",
+    "model": "gemini-3.8-flash",
+    "sha": "5257eaa5d4a138f143ba3169ba7e469b43f1aba819a769ea64da4eb9505fc550"
   }
 }
