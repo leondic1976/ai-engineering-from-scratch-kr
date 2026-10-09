@@ -58,5 +58,30 @@
     "at": "2026-10-08T05:58:49Z",
     "model": "gemini-3.8-flash",
     "sha": "5257eaa5d4a138f143ba3169ba7e469b43f1aba819a769ea64da4eb9505fc550"
+  },
+  "phases/01-math-foundations/01-linear-algebra-intuition": {
+    "at": "2026-10-09T22:37:27Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9bac2df58d85c30df3f36bde3626b02a3fa6aa001536bc343320b9048ee284e1"
+  },
+  "phases/01-math-foundations/02-vectors-matrices-operations": {
+    "at": "2026-10-09T22:37:46Z",
+    "model": "gemini-3.8-flash",
+    "sha": "398ce87f481e54f360898e1af0d0c05877f631d5d1b1c1edebf83f3cf5a09981"
+  },
+  "phases/01-math-foundations/03-matrix-transformations": {
+    "at": "2026-10-09T22:38:23Z",
+    "model": "gemini-3.8-flash",
+    "sha": "bd248b5462edccab7838ef32e303839811157e453873fb6b19421e4f3d5f2365"
+  },
+  "phases/01-math-foundations/04-calculus-for-ml": {
+    "at": "2026-10-09T22:40:15Z",
+    "model": "gemini-3.8-flash",
+    "sha": "0ed4721bd7a01a876bdfd1cafd3a732d645842bf942f708bf32198fd5a8e6794"
+  },
+  "phases/01-math-foundations/05-chain-rule-and-autodiff": {
+    "at": "2026-10-09T22:41:26Z",
+    "model": "gemini-3.8-flash",
+    "sha": "4687cfcd67796cd61c6a73bfca1125c030030cf7a75f6aef98f7e640c5447190"
   }
 }
