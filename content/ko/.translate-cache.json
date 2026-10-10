@@ -88,5 +88,35 @@
     "at": "2026-10-10T05:47:53Z",
     "model": "gemini-3.8-flash",
     "sha": "6af905cb9c5318be55d10a25d9ba18b2dc253d8b8fe6b5b4cc32fe243d2e47f8"
+  },
+  "phases/01-math-foundations/07-bayes-theorem": {
+    "at": "2026-10-10T12:27:37Z",
+    "model": "gemini-3.8-flash",
+    "sha": "e44e7db0a2b9c89dc09eecbe3ac41bb1c631b8aa239609b82b832c532d75ce6d"
+  },
+  "phases/01-math-foundations/08-optimization": {
+    "at": "2026-10-10T12:28:03Z",
+    "model": "gemini-3.8-flash",
+    "sha": "390797c59e5e709c5670edc7aa79d087fa9ada55a37a6818f35f946a53be92d6"
+  },
+  "phases/01-math-foundations/09-information-theory": {
+    "at": "2026-10-10T12:28:48Z",
+    "model": "gemini-3.8-flash",
+    "sha": "56e2b277862358e636e71058ac13e9cd31366d39105702aa91570844e1e38953"
+  },
+  "phases/01-math-foundations/10-dimensionality-reduction": {
+    "at": "2026-10-10T12:29:44Z",
+    "model": "gemini-3.8-flash",
+    "sha": "13f508adaa0599b3db8d18ad77c9b20b501cf6864dd242ad884a48412e41bcfc"
+  },
+  "phases/01-math-foundations/11-singular-value-decomposition": {
+    "at": "2026-10-10T12:31:14Z",
+    "model": "gemini-3.8-flash",
+    "sha": "8cd08bd71af0e84ef70159d67acf7b0781860dd567dd060b037c3923ae27c214"
+  },
+  "phases/01-math-foundations/12-tensor-operations": {
+    "at": "2026-10-10T12:31:47Z",
+    "model": "gemini-3.8-flash",
+    "sha": "98beea9409bda9831f924611911ce5218d012444740a5a8a800f9c7823aaf632"
   }
 }
