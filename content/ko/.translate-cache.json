@@ -83,5 +83,10 @@
     "at": "2026-10-09T22:41:26Z",
     "model": "gemini-3.8-flash",
     "sha": "4687cfcd67796cd61c6a73bfca1125c030030cf7a75f6aef98f7e640c5447190"
+  },
+  "phases/01-math-foundations/06-probability-and-distributions": {
+    "at": "2026-10-10T05:47:53Z",
+    "model": "gemini-3.8-flash",
+    "sha": "6af905cb9c5318be55d10a25d9ba18b2dc253d8b8fe6b5b4cc32fe243d2e47f8"
   }
 }
