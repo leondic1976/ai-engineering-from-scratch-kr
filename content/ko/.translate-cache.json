@@ -59,6 +59,11 @@
     "model": "gemini-3.8-flash",
     "sha": "5257eaa5d4a138f143ba3169ba7e469b43f1aba819a769ea64da4eb9505fc550"
   },
+  "phases/00-setup-and-tooling/13-python-for-ai-engineering": {
+    "at": "2026-10-12T15:18:25Z",
+    "model": "gemini-3.8-flash",
+    "sha": "6e9509d7b4e11d680f659257d60b76070dba72a8f1b4762c5042b810e6eceb02"
+  },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
     "at": "2026-10-09T22:37:27Z",
     "model": "gemini-3.8-flash",
@@ -118,5 +123,20 @@
     "at": "2026-10-10T12:31:47Z",
     "model": "gemini-3.8-flash",
     "sha": "98beea9409bda9831f924611911ce5218d012444740a5a8a800f9c7823aaf632"
+  },
+  "phases/01-math-foundations/13-numerical-stability": {
+    "at": "2026-10-12T15:19:17Z",
+    "model": "gemini-3.8-flash",
+    "sha": "1f803ae9c3db1ab75678a37007833c86479ef7810778c396201e3c5d91e731c6"
+  },
+  "phases/01-math-foundations/14-norms-and-distances": {
+    "at": "2026-10-12T15:20:20Z",
+    "model": "gemini-3.8-flash",
+    "sha": "f0949b87124ae76e14ed331231e357edf7e60552dc4fadd42dee0ffed10ebeca"
+  },
+  "phases/01-math-foundations/15-statistics-for-ml": {
+    "at": "2026-10-12T15:20:57Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9770d8e715f37b25538f2c9b0e78de30b38d7c1ddccc81765b124880071e0561"
   }
 }
