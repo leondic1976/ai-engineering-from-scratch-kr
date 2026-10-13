@@ -138,5 +138,15 @@
     "at": "2026-10-12T15:20:57Z",
     "model": "gemini-3.8-flash",
     "sha": "9770d8e715f37b25538f2c9b0e78de30b38d7c1ddccc81765b124880071e0561"
+  },
+  "phases/01-math-foundations/16-sampling-methods": {
+    "at": "2026-10-13T22:44:42Z",
+    "model": "gemini-3.8-flash",
+    "sha": "387bb3952f9a86f59c898179ec88597a8e9719e662ecab1b6b93bd6a977c2616"
+  },
+  "phases/01-math-foundations/17-linear-systems": {
+    "at": "2026-10-13T22:48:57Z",
+    "model": "gemini-3.8-flash",
+    "sha": "de9a2c0f1e09351e6061834a651110bdab18ae3df534315ea2a62a33a156af49"
   }
 }
