@@ -148,5 +148,20 @@
     "at": "2026-10-13T22:48:57Z",
     "model": "gemini-3.8-flash",
     "sha": "de9a2c0f1e09351e6061834a651110bdab18ae3df534315ea2a62a33a156af49"
+  },
+  "phases/01-math-foundations/18-convex-optimization": {
+    "at": "2026-10-14T11:55:00Z",
+    "model": "gemini-3.8-flash",
+    "sha": "061158e46d86c18ffeb43b730c98c52994ae863629445f6431942a368cfdb952"
+  },
+  "phases/01-math-foundations/19-complex-numbers": {
+    "at": "2026-10-14T11:59:48Z",
+    "model": "gemini-3.8-flash",
+    "sha": "4452702ccd0d4c75a574644f277d6f6a6d87579f80395eccebdd211bdefbfd58"
+  },
+  "phases/01-math-foundations/20-fourier-transform": {
+    "at": "2026-10-14T12:16:07Z",
+    "model": "gemini-3.8-flash",
+    "sha": "88d32836b77ed732bc2e2610451d4ea5509c1b20b9bb96dddc2dd3cd0bc47cff"
   }
 }
