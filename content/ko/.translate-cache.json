@@ -60,9 +60,9 @@
     "sha": "2c8060d42a1115002a602a1db7241eb5338a7169661c238163c16c5653136513"
   },
   "phases/00-setup-and-tooling/13-python-for-ai-engineering": {
-    "at": "2026-10-12T15:18:25Z",
+    "at": "2026-10-16T21:05:28Z",
     "model": "gemini-3.8-flash",
-    "sha": "6e9509d7b4e11d680f659257d60b76070dba72a8f1b4762c5042b810e6eceb02"
+    "sha": "f8995bff8d2189e09fc41ec32c9eb6594653e1f19a9053d1c77c7abd8d41b938"
   },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
     "at": "2026-10-09T22:37:27Z",
