@@ -1,37 +1,37 @@
 ---
 title_en: "Matrix Transformations"
 source: "phases/01-math-foundations/03-matrix-transformations"
-source_sha: "bd248b5462edccab"
+source_sha: "b0b73f786f3e972f"
 model: "gemini-3.8-flash"
-translated_at: "2026-10-09"
+translated_at: "2026-10-17"
 ---
-# Matrix Transformations
+# 행렬 변환
 
-> 행렬은 공간의 형태를 바꾸는 기계입니다. 행렬이 모든 점에 미치는 영향을 이해하면, 변환 전체를 파악할 수 있습니다.
+> 행렬은 공간의 형태를 바꾸는 기계입니다. 행렬이 모든 점에 어떤 작용을 하는지 이해하면 변환 전체를 이해할 수 있습니다.
 
 **유형:** Build (실습)
 **사용 언어:** Python, Julia
 **선수 레슨:** Phase 1, Lessons 01-02 (Linear Algebra Intuition, Vectors & Matrices Operations)
 **소요 시간:** ~75분
 
-## Learning Objectives
+## 학습 목표
 
-- 회전(rotation), 스케일링(scaling), 전단(shearing), 반사(reflection) 행렬을 구현하고 이를 2D 및 3D 점에 적용하기
-- 행렬 곱셈을 통해 여러 변환을 합성(composition)하고 변환 순서가 중요함을 확인하기
-- 특성 방정식(characteristic equation)으로부터 2x2 행렬의 고윳값(eigenvalue)과 고유벡터(eigenvector) 계산하기
-- 고윳값이 PCA 방향, RNN 안정성, 스펙트럼 클러스터링(spectral clustering) 동작을 결정하는 이유 설명하기
+- 회전(rotation), 스케일링(scaling), 전단(shearing), 반사(reflection) 행렬을 구성하고 이를 2D 및 3D 점에 적용합니다.
+- 행렬 곱셈으로 여러 변환을 합성하고 순서가 결과에 영향을 미침을 확인합니다.
+- 특성방정식(characteristic equation)으로부터 2x2 행렬의 고윳값(eigenvalue)과 고유벡터(eigenvector)를 계산합니다.
+- 고윳값이 주성분 분석(PCA) 방향, RNN 안정성, 스펙트럼 클러스터링(spectral clustering) 동작을 결정하는 이유를 설명합니다.
 
-## The Problem
+## 문제 상황
 
-PCA를 읽다 보면 "공분산 행렬의 고유벡터를 찾는다"라는 문장을 보게 됩니다. 모델 안정성을 읽다 보면 "모든 고윳값의 크기가 1 미만인지 확인한다"라는 문장이 나옵니다. 데이터 증강(data augmentation)을 읽다 보면 "무작위 회전을 적용한다"라는 내용을 접합니다. 행렬이 공간에 기하학적으로 어떤 작용을 하는지 이해하지 못하면 이 모든 개념을 온전히 납득할 수 없습니다.
+PCA에 대해 읽다 보면 "공분산 행렬의 고유벡터를 구하라"는 표현을 보게 됩니다. 모델 안정성에 대해 읽다 보면 "모든 고윳값의 크기가 1 미만인지 확인하라"는 표현을 보게 됩니다. 데이터 증강(data augmentation)에 대해 읽다 보면 "무작위 회전을 적용하라"는 표현을 보게 됩니다. 행렬이 공간에 기하학적으로 어떤 작용을 하는지 이해하지 못하면 이 모든 내용은 와닿지 않습니다.
 
-행렬은 단순히 숫자를 격자로 나열한 것이 아닙니다. 행렬은 공간을 조작하는 기계입니다. 회전 행렬은 점을 회전시킵니다. 스케일링 행렬은 점을 늘리거나 줄입니다. 전단 행렬은 점을 기울입니다. 신경망이 데이터에 적용하는 모든 변환은 이러한 연산 중 하나이거나, 이들의 합성입니다. 이번 레슨에서는 이 연산들을 구체적으로 다룹니다.
+행렬은 단순한 숫자 격자가 아닙니다. 행렬은 공간을 다루는 기계입니다. 회전 행렬은 점을 회전시킵니다. 스케일링 행렬은 점을 늘이거나 줄입니다. 전단 행렬은 점을 기울입니다. 신경망이 데이터에 적용하는 모든 변환은 이러한 연산 중 하나이거나 이들의 합성입니다. 이 강의에서는 이러한 연산들을 구체적으로 살펴봅니다.
 
-## The Concept
+## 핵심 개념
 
-### Transformations as matrices
+### 행렬로서의 변환
 
-2D의 모든 선형 변환은 2x2 행렬로 표현할 수 있습니다. 이 행렬은 기저 벡터(basis vector) [1, 0]과 [0, 1]이 변환 후 어디에 위치하는지 정확하게 보여줍니다. 나머지 모든 것은 여기서 파생됩니다.
+2차원 공간의 모든 선형 변환(linear transformation)은 2x2 행렬로 나타낼 수 있습니다. 이 행렬은 기저 벡터 [1, 0]과 [0, 1]이 어디로 이동하는지 정확히 보여줍니다. 나머지 모든 점의 이동은 이를 따릅니다.
 
 ```mermaid
 graph LR
@@ -50,9 +50,9 @@ graph LR
     e2 --> M --> e2p
 ```
 
-### Rotation
+### 회전
 
-각도 theta만큼의 2D 회전은 거리와 각도를 그대로 보존합니다. 모든 점을 원호(circular arc)를 따라 이동시킵니다.
+각도 $\theta$만큼의 2D 회전은 거리와 각도를 그대로 보존합니다. 모든 점을 원호(circular arc)를 따라 이동시킵니다.
 
 ```mermaid
 graph LR
@@ -71,25 +71,19 @@ graph LR
     B --> R --> Bp
 ```
 
-3D에서는 축을 중심으로 회전합니다. 각 축마다 고유한 회전 행렬이 존재합니다:
+3D에서는 특정 축을 중심으로 회전합니다. 각 축마다 고유한 회전 행렬이 있습니다.
 
-```
-Rz(theta) = | cos  -sin  0 |     Rotate around z-axis
-            | sin   cos  0 |     (x-y plane spins, z stays)
-            |  0     0   1 |
-
-Rx(theta) = | 1   0     0    |   Rotate around x-axis
-            | 0  cos  -sin   |   (y-z plane spins, x stays)
-            | 0  sin   cos   |
-
-Ry(theta) = |  cos  0  sin |     Rotate around y-axis
-            |   0   1   0  |     (x-z plane spins, y stays)
-            | -sin  0  cos |
+```math
+\begin{aligned}
+R_z(\theta) &= \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \quad \text{Rotate around z-axis (x-y plane spins, z stays)} \\[6pt]
+R_x(\theta) &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \cos\theta \end{bmatrix} \quad \text{Rotate around x-axis (y-z plane spins, x stays)} \\[6pt]
+R_y(\theta) &= \begin{bmatrix} \cos\theta & 0 & \sin\theta \\ 0 & 1 & 0 \\ -\sin\theta & 0 & \cos\theta \end{bmatrix} \quad \text{Rotate around y-axis (x-z plane spins, y stays)}
+\end{aligned}
 ```
 
-### Scaling
+### 스케일링
 
-스케일링은 각 축을 따라 독립적으로 늘리거나 압축합니다.
+스케일링은 각 축을 따라 독립적으로 공간을 늘이거나 압축합니다.
 
 ```mermaid
 graph LR
@@ -108,9 +102,9 @@ graph LR
     B --> S --> Bp
 ```
 
-### Shearing
+### 전단
 
-전단(shearing)은 한 축을 고정한 채 다른 축을 기울입니다. 직사각형을 평행사변형으로 만듭니다.
+전단(shearing)은 한 축을 고정한 채 다른 축을 기울입니다. 직사각형을 평행사변형으로 변형합니다.
 
 ```mermaid
 graph LR
@@ -130,12 +124,12 @@ graph LR
 ```
 
 전단 행렬:
-- `Shx = [[1, k], [0, 1]]`은 x를 k * y만큼 이동
-- `Shy = [[1, 0], [k, 1]]`는 y를 k * x만큼 이동
+- `Shx = [[1, k], [0, 1]]`은 $x$을 $k \cdot y$만큼 이동시킵니다.
+- `Shy = [[1, 0], [k, 1]]`는 $y$을 $k \cdot x$만큼 이동시킵니다.
 
-### Reflection
+### 반사
 
-반사는 축이나 선을 기준으로 점을 거울처럼 뒤집습니다.
+반사(reflection)는 축이나 선을 기준으로 점을 대칭 이동합니다.
 
 ```mermaid
 graph LR
@@ -155,9 +149,9 @@ graph LR
 - y축 기준 반사: `[[-1, 0], [0, 1]]`
 - x축 기준 반사: `[[1, 0], [0, -1]]`
 
-### Composition: chaining transformations
+### 합성: 변환의 연결
 
-변환 A를 적용한 후 B를 적용하는 것은 두 행렬을 곱하는 것과 같습니다: `result = B @ A @ point`. 순서가 중요합니다. 회전 후 스케일링을 적용한 결과는 스케일링 후 회전을 적용한 결과와 다릅니다.
+변환 A를 적용한 뒤 B를 적용하는 것은 두 행렬을 곱하는 것과 같습니다: `result = B @ A @ point`. 곱하는 순서가 중요합니다. 회전 후 스케일링을 적용한 결과는 스케일링 후 회전을 적용한 결과와 다릅니다.
 
 ```mermaid
 graph LR
@@ -177,11 +171,11 @@ graph LR
 
 합성 결과: `R @ S = [[0, -0.5], [2, 0]]`
 
-서로 다른 결과가 나옵니다. 행렬 곱셈은 교환법칙이 성립하지 않습니다.
+결과가 서로 다릅니다. 행렬 곱셈에는 교환법칙이 성립하지 않습니다.
 
-### Eigenvalues and eigenvectors
+### 고윳값과 고유벡터
 
-대부분의 벡터는 행렬이 적용되면 방향이 바뀝니다. 고유벡터는 특별합니다. 행렬이 고유벡터를 스케일링할 뿐 결코 회전시키지 않습니다. 이때 스케일링되는 배수가 바로 고윳값입니다.
+대부분의 벡터는 행렬과 곱해지면 방향이 바뀝니다. 고유벡터는 특별합니다. 행렬을 곱해도 방향은 바뀌지 않고 크기만 스케일링됩니다. 이때의 스케일링 계수가 고윳값입니다.
 
 ```
 A @ v = lambda * v
@@ -199,11 +193,11 @@ Eigenvector [1, -1] with eigenvalue 1:
   A @ [1,-1] = [1, -1] = 1 * [1, -1]  (same direction, unchanged)
 ```
 
-이 행렬은 [1, 1] 방향으로 공간을 3배 늘리고, [1, -1] 방향은 그대로 유지합니다. 그 외의 모든 방향은 이 두 방향의 조합입니다.
+이 행렬은 [1, 1] 방향으로는 공간을 3배 늘이고, [1, -1] 방향은 그대로 유지합니다. 다른 모든 방향은 이 두 방향의 조합입니다.
 
-### Eigendecomposition
+### 고윳값 분해
 
-행렬이 n개의 선형 독립인 고유벡터를 갖는다면, 다음과 같이 분해(eigendecomposition)할 수 있습니다:
+행렬이 $n$개의 선형 독립(linearly independent)인 고유벡터를 가지면 다음과 같이 분해할 수 있습니다.
 
 ```
 A = V @ D @ V^(-1)
@@ -215,15 +209,15 @@ V^(-1) = inverse of V
 This says: rotate into eigenvector coordinates, scale along each axis, rotate back.
 ```
 
-### Why eigenvalues matter
+### 고윳값이 중요한 이유
 
-**PCA.** 공분산 행렬의 고유벡터는 주성분(principal components)이 됩니다. 고윳값은 각 주성분이 분산을 얼마나 포착하는지 알려줍니다. 고윳값 크기순으로 정렬한 뒤 상위 k개를 유지하면 차원 축소(dimensionality reduction)가 완료됩니다.
+**PCA.** 공분산 행렬의 고유벡터가 바로 주성분(principal component)입니다. 고윳값은 각 주성분이 설명하는 분산의 크기를 나타냅니다. 고윳값 순으로 정렬하여 상위 $k$개를 유지하면 차원 축소(dimensionality reduction)가 완료됩니다.
 
-**안정성.** 순환 신경망(RNN)과 동적 시스템에서 크기(절댓값)가 1보다 큰 고윳값은 출력을 폭주하게 만듭니다. 크기가 1 미만이면 출력이 소실됩니다. 이것이 기울기 소실/폭주 문제(vanishing/exploding gradient problem)를 한 문장으로 정리한 것입니다.
+**안정성(Stability).** 순환 신경망(RNN) 및 동적 시스템(dynamical system)에서 크기가 1보다 큰 고윳값은 출력을 폭주(explode)하게 만듭니다. 크기가 1보다 작은 고윳값은 출력을 소실(vanish)되게 만듭니다. 이것이 바로 기울기 소실/폭주(vanishing/exploding gradient) 문제를 한 문장으로 정리한 것입니다.
 
-**스펙트럼 기법.** 그래프 신경망(GNN)은 인접 행렬의 고윳값을 사용합니다. 스펙트럼 클러스터링은 라플라시안 행렬의 고윳값을 활용합니다. 고유벡터는 그래프의 구조를 드러냅니다.
+**스펙트럼 기법(Spectral methods).** 그래프 신경망(GNN)은 인접 행렬(adjacency matrix)의 고윳값을 사용합니다. 스펙트럼 클러스터링(spectral clustering)은 라플라시안(Laplacian) 행렬의 고윳값을 사용합니다. 이때 고유벡터는 그래프의 구조를 드러냅니다.
 
-### Determinant as volume scaling factor
+### 부피 스케일링 계수로서의 행렬식
 
 변환 행렬의 행렬식(determinant)은 해당 변환이 면적(2D) 또는 부피(3D)를 얼마나 스케일링하는지 나타냅니다.
 
@@ -243,9 +237,9 @@ det = -1:  area preserved but orientation flipped (reflection)
 matrix-transform
 ```
 
-## Build It
+## 직접 구현하기
 
-### Step 1: Transformation matrices from scratch (Python)
+### 1단계: 변환 행렬 밑바닥부터 구현하기 (Python)
 
 ```python
 import math
@@ -296,7 +290,7 @@ reflected = mat_vec_mul(reflection_y(), [2.0, 1.0])
 print(f"Reflect (2,1) across y: ({reflected[0]:.1f}, {reflected[1]:.1f})")
 ```
 
-### Step 2: Composition of transformations
+### 2단계: 변환의 합성
 
 ```python
 R = rotation_2d(math.pi / 2)
@@ -314,9 +308,9 @@ print(f"Scale then rotate 90: ({result2[0]:.2f}, {result2[1]:.2f})")
 print(f"Same? {result1 == result2}")
 ```
 
-### Step 3: Eigenvalues from scratch (2x2)
+### 3단계: 고윳값 밑바닥부터 구현하기 (2x2)
 
-2x2 행렬 `[[a, b], [c, d]]`에서 고윳값은 특성 방정식을 풉니다: `lambda^2 - (a+d)*lambda + (ad - bc) = 0`.
+2x2 행렬 `[[a, b], [c, d]]`에서 고윳값은 특성방정식 $\lambda^2 - (a+d)\lambda + (ad - bc) = 0$를 만족합니다.
 
 ```python
 def eigenvalues_2x2(matrix):
@@ -361,7 +355,7 @@ for val in vals:
     print(f"    l*v = {[round(x,4) for x in scaled]}")
 ```
 
-### Step 4: Determinant as volume scaling factor
+### 4단계: 부피 스케일링 계수로서의 행렬식
 
 ```python
 def det_2x2(matrix):
@@ -377,7 +371,7 @@ print(f"det(singular)     = {det_2x2(singular):.1f}")
 print("Singular: columns are proportional, space collapses to a line.")
 ```
 
-## Use It
+## 활용하기
 
 NumPy는 최적화된 루틴을 통해 이 모든 작업을 처리합니다.
 
@@ -418,7 +412,7 @@ print(f"Original:\n{B}")
 print(f"Reconstructed:\n{reconstructed}")
 ```
 
-### 3D rotations with NumPy
+### NumPy를 활용한 3D 회전
 
 ```python
 def rotation_3d_z(theta):
@@ -438,34 +432,42 @@ print(f"Rotate 90 around z: {np.round(rotated_z, 4)}")
 print(f"Rotate 90 around x: {np.round(rotated_x, 4)}")
 ```
 
-## Ship It
+## 실무 적용
 
-이번 레슨은 PCA(Phase 2)와 신경망 가중치 분석을 위한 기하학적 토대를 구축합니다. 여기서 직접 작성한 고윳값/고유벡터 코드는 프로덕션 ML 시스템에서 차원 축소, 스펙트럼 클러스터링, 안정성 분석을 뒷받침하는 알고리즘과 동일합니다.
+이번 강의는 PCA(Phase 2)와 신경망 가중치 분석을 위한 기하학적 토대를 마련했습니다. 여기서 구현한 고윳값/고유벡터 코드는 프로덕션 ML 시스템에서 차원 축소, 스펙트럼 클러스터링, 안정성 분석을 뒷받침하는 핵심 알고리즘과 동일합니다.
 
-## Exercises
+## 연습 문제
 
-1. 단위 정사각형(꼭짓점이 [0,0], [1,0], [1,1], [0,1]에 위치)에 회전, 스케일링, 전단을 각각 적용해 보세요. 각 변환에 대해 변환된 꼭짓점을 출력하세요. 회전 변환이 꼭짓점 사이의 거리를 보존하는지 검증해 보세요.
+1. 단위 정사각형(꼭짓점 좌표: [0,0], [1,0], [1,1], [0,1])에 회전, 스케일링, 전단 변환을 적용하세요. 각 변환에 대해 변환된 꼭짓점 좌표를 출력하세요. 회전 변환이 꼭짓점 간 거리를 보존하는지 검증하세요.
 
-2. 특성 방정식을 손으로 직접 풀어 행렬 [[4, 2], [1, 3]]의 고윳값을 구하세요. 그런 다음 직접 작성한 함수와 NumPy를 사용해 결과를 검증하세요.
+2. 행렬 [[4, 2], [1, 3]]의 고윳값을 특성방정식을 이용해 손으로 직접 구해 보세요. 그런 다음 직접 구현한 함수 및 NumPy를 사용해 결과를 검증하세요.
 
-3. 세 가지 변환(30도 회전, [1.5, 0.8] 스케일링, kx=0.3 전단)의 합성을 만들고, 원형으로 배치된 8개의 점에 적용하세요. 변환 전후의 좌표를 출력하세요. 합성 행렬의 행렬식을 계산하고, 개별 행렬식의 곱과 같은지 검증하세요.
+3. 세 가지 변환(30도 회전, [1.5, 0.8] 스케일링, kx=0.3 전단)의 합성을 생성하고 원형으로 배열된 8개의 점에 적용하세요. 변환 전후의 좌표를 출력하세요. 합성 행렬의 행렬식을 계산하고, 이것이 각 행렬식의 곱과 같은지 검증하세요.
 
-## Key Terms
+### 힌트
+
+**연습 문제 1.** `mat_vec_mul`를 사용하여 각 꼭짓점에 `rotation_2d`, `scaling_2d`, `shearing_2d`을 적용하세요. 회전의 경우 변환 전후의 4개 변의 길이와 2개 대각선의 길이를 계산하여 각각 동일하게 유지되는지 확인하세요.
+
+**연습 문제 2.** 특성방정식 $\lambda^2 - (\text{trace})\lambda + \det = 0$을 세우고 해를 구하세요. 구한 두 값의 합이 대각합(trace, 7)과 같고 곱이 행렬식(determinant, 10)과 같은지 확인한 후, `eigenvalues_2x2` 및 `np.linalg.eigvals`의 결과와 비교하세요.
+
+**연습 문제 3.** 세 행렬을 구성하되 전단에는 `shearing_2d(0.3, 0)`를 사용하고, 적용 순서대로 `mat_mul`를 사용해 곱한 뒤, 그 결과를 8개의 점 $(\cos\theta, \sin\theta)$에 적용하세요. 회전 행렬의 행렬식은 1이고 전단 행렬의 행렬식도 1이므로, 합성 행렬의 `det_2x2`는 $1.5 \times 0.8 = 1.2$와 같아야 합니다.
+## 핵심 용어
 
 | 용어 | 흔히 하는 표현 | 실제 의미 |
 |------|----------------|----------------------|
-| 회전 행렬(Rotation matrix) | "회전시키는 것" | 거리와 각도를 보존하면서 원호를 따라 점을 이동시키는 직교 행렬(orthogonal matrix). 행렬식은 항상 1입니다. |
-| 스케일링 행렬(Scaling matrix) | "크기를 키우는 것" | 각 축을 따라 독립적으로 늘리거나 압축하는 대각 행렬(diagonal matrix). 행렬식은 각 축 스케일 인자의 곱입니다. |
-| 전단 행렬(Shearing matrix) | "기울이는 것" | 한 좌표를 다른 좌표에 비례하여 이동시켜 직사각형을 평행사변형으로 만드는 행렬. 행렬식은 1입니다. |
-| 반사(Reflection) | "거울처럼 뒤집는 것" | 축이나 평면을 기준으로 공간을 뒤집는 행렬. 행렬식은 -1입니다. |
-| 합성(Composition) | "두 가지 작업을 연달아 하는 것" | 연산을 연속으로 적용하기 위해 변환 행렬을 곱하는 것. 순서가 중요합니다: B @ A는 A를 먼저 적용한 후 B를 적용함을 의미합니다. |
-| 고유벡터(Eigenvector) | "특별한 방향" | 행렬이 방향을 회전시키지 않고 크기만 스케일링하는 방향. 변환의 고유한 지문과 같습니다. |
-| 고윳값(Eigenvalue) | "늘어나는 정도" | 행렬이 고유벡터를 스케일링하는 스칼라 인자. 음수(뒤집힘)이거나 복소수(회전)일 수 있습니다. |
-| 고윳값 분해(Eigendecomposition) | "행렬을 쪼개는 것" | 행렬을 V @ D @ V^(-1)로 표현하여 기본적인 스케일링 방향과 크기로 분해하는 것. |
-| 행렬식(Determinant) | "행렬에서 나오는 단일 숫자" | 변환이 면적(2D) 또는 부피(3D)를 스케일링하는 비율. 0이면 변환을 되돌릴 수 없음을 의미합니다. |
-| 특성 방정식(Characteristic equation) | "고윳값이 나오는 곳" | det(A - lambda * I) = 0. 이 다항식의 근이 곧 고윳값입니다. |
+| 회전 행렬(Rotation matrix) | "회전시키는 것" | 거리와 각도를 보존하면서 원형 호를 따라 점을 이동시키는 직교 행렬(orthogonal matrix)입니다. 행렬식(determinant)은 항상 1입니다. |
+| 스케일링 행렬(Scaling matrix) | "크기를 키우는 것" | 각 축을 따라 독립적으로 늘리거나 압축하는 대각 행렬(diagonal matrix)입니다. 행렬식은 배율들의 곱입니다. |
+| 전단 행렬(Shearing matrix) | "기울이는 것" | 한 좌표를 다른 좌표에 비례하여 이동시켜 직사각형을 평행사변형으로 변형하는 행렬입니다. 행렬식은 1입니다. |
+| 반사(Reflection) | "거울처럼 뒤집는 것" | 축이나 평면을 기준으로 공간을 뒤집는 행렬입니다. 행렬식은 -1입니다. |
+| 합성(Composition) | "두 가지 작업을 연달아 하는 것" | 연산을 연결하기 위해 변환 행렬들을 곱하는 것입니다. 순서가 중요합니다. B @ A는 A를 먼저 적용한 다음 B를 적용함을 의미합니다. |
+| 고유벡터(Eigenvector) | "특별한 방향" | 행렬이 회전시키지 않고 스케일링(신축)만 적용하는 방향입니다. 변환의 지문과도 같습니다. |
+| 고윳값(Eigenvalue) | "얼마나 늘어나는지" | 행렬이 고유벡터를 스케일링하는 스칼라 배수입니다. 음수(반전)이거나 복소수(회전)일 수 있습니다. |
+| 고윳값 분해(Eigendecomposition) | "행렬을 쪼개는 것" | 행렬을 $V D V^{-1}$로 나타내어, 근본적인 스케일링 방향과 크기로 분해하는 것입니다. |
+| 행렬식(Determinant) | "행렬에서 나오는 단 하나의 숫자" | 변환이 면적(2D) 또는 부피(3D)를 스케일링하는 비율입니다. 0은 변환이 비가역적(되돌릴 수 없음)임을 의미합니다. |
+| 특성 방정식(Characteristic equation) | "고윳값이 나오는 식" | $\det(A - \lambda I) = 0$. 방정식의 근이 곧 고윳값이 되는 다항식입니다. |
+
 ## 추가 자료
 
 - [3Blue1Brown: Linear Transformations](https://www.3blue1brown.com/lessons/linear-transformations) -- 행렬이 공간을 어떻게 변형하는지에 대한 시각적 직관
-- [3Blue1Brown: Eigenvectors and Eigenvalues](https://www.3blue1brown.com/lessons/eigenvalues) -- 고유벡터(eigenvector)가 기하학적으로 무엇을 의미하는지에 대한 최고의 시각적 설명
-- [MIT 18.06 Lecture 21: Eigenvalues and Eigenvectors](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) -- Gilbert Strang 교수의 정석적인 강의
+- [3Blue1Brown: Eigenvectors and Eigenvalues](https://www.3blue1brown.com/lessons/eigenvalues) -- 고유벡터가 기하학적으로 무엇을 의미하는지에 대한 최고의 시각적 설명
+- [MIT 18.06 Lecture 21: Eigenvalues and Eigenvectors](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) -- Gilbert Strang 교수의 명강의

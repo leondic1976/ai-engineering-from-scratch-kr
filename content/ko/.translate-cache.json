@@ -65,49 +65,49 @@
     "sha": "f8995bff8d2189e09fc41ec32c9eb6594653e1f19a9053d1c77c7abd8d41b938"
   },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
-    "at": "2026-10-09T22:37:27Z",
+    "at": "2026-10-17T10:38:11Z",
     "model": "gemini-3.8-flash",
-    "sha": "9bac2df58d85c30df3f36bde3626b02a3fa6aa001536bc343320b9048ee284e1"
+    "sha": "eb07ada4e15b721327061149b348bd31fe6e2a1e6d6f716681435ef998e5c63f"
   },
   "phases/01-math-foundations/02-vectors-matrices-operations": {
-    "at": "2026-10-09T22:37:46Z",
+    "at": "2026-10-17T10:38:29Z",
     "model": "gemini-3.8-flash",
-    "sha": "398ce87f481e54f360898e1af0d0c05877f631d5d1b1c1edebf83f3cf5a09981"
+    "sha": "a5849d742948a87e8ef7c6eb919df6acea0a3808ef61fe27414e9618b4dfb8ea"
   },
   "phases/01-math-foundations/03-matrix-transformations": {
-    "at": "2026-10-09T22:38:23Z",
+    "at": "2026-10-17T10:39:28Z",
     "model": "gemini-3.8-flash",
-    "sha": "bd248b5462edccab7838ef32e303839811157e453873fb6b19421e4f3d5f2365"
+    "sha": "b0b73f786f3e972fb9ca333b26028641423ebfc262a8abcba8c6d0b2ac1fe8f6"
   },
   "phases/01-math-foundations/04-calculus-for-ml": {
-    "at": "2026-10-09T22:40:15Z",
+    "at": "2026-10-17T10:40:35Z",
     "model": "gemini-3.8-flash",
-    "sha": "0ed4721bd7a01a876bdfd1cafd3a732d645842bf942f708bf32198fd5a8e6794"
+    "sha": "026ef098b0d57e79d611ba10046c2c2db884e71e3349e4bf6c2f199050325b4d"
   },
   "phases/01-math-foundations/05-chain-rule-and-autodiff": {
-    "at": "2026-10-09T22:41:26Z",
+    "at": "2026-10-17T10:41:17Z",
     "model": "gemini-3.8-flash",
-    "sha": "4687cfcd67796cd61c6a73bfca1125c030030cf7a75f6aef98f7e640c5447190"
+    "sha": "0ec6ec8f8e98d36719b21d5fe1a78c787261864eb5689b776a8d76391b04fc3f"
   },
   "phases/01-math-foundations/06-probability-and-distributions": {
-    "at": "2026-10-10T05:47:53Z",
+    "at": "2026-10-17T10:42:37Z",
     "model": "gemini-3.8-flash",
-    "sha": "6af905cb9c5318be55d10a25d9ba18b2dc253d8b8fe6b5b4cc32fe243d2e47f8"
+    "sha": "9595bccbedd22dbf64a1412aebc327ba8817616da5cd2e3aa65ab4a748c1344c"
   },
   "phases/01-math-foundations/07-bayes-theorem": {
-    "at": "2026-10-10T12:27:37Z",
+    "at": "2026-10-17T10:43:51Z",
     "model": "gemini-3.8-flash",
-    "sha": "e44e7db0a2b9c89dc09eecbe3ac41bb1c631b8aa239609b82b832c532d75ce6d"
+    "sha": "541198f69f334fd2a40906f849b72ff0005f461e01b72b35cf11857ca347989a"
   },
   "phases/01-math-foundations/08-optimization": {
-    "at": "2026-10-10T12:28:03Z",
+    "at": "2026-10-17T10:44:25Z",
     "model": "gemini-3.8-flash",
-    "sha": "390797c59e5e709c5670edc7aa79d087fa9ada55a37a6818f35f946a53be92d6"
+    "sha": "3ff003a1ae4377981812e9aa7694924fd18d70e769291ffa60d573a9aa2cd5b1"
   },
   "phases/01-math-foundations/09-information-theory": {
-    "at": "2026-10-10T12:28:48Z",
+    "at": "2026-10-17T10:45:27Z",
     "model": "gemini-3.8-flash",
-    "sha": "56e2b277862358e636e71058ac13e9cd31366d39105702aa91570844e1e38953"
+    "sha": "8b84ff00a2032ab036003c7f938423ec22fe180180406efa1ca02e5ddf7c723f"
   },
   "phases/01-math-foundations/10-dimensionality-reduction": {
     "at": "2026-10-10T12:29:44Z",
