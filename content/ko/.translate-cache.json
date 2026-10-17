@@ -110,9 +110,9 @@
     "sha": "8b84ff00a2032ab036003c7f938423ec22fe180180406efa1ca02e5ddf7c723f"
   },
   "phases/01-math-foundations/10-dimensionality-reduction": {
-    "at": "2026-10-10T12:29:44Z",
+    "at": "2026-10-17T15:31:31Z",
     "model": "gemini-3.8-flash",
-    "sha": "13f508adaa0599b3db8d18ad77c9b20b501cf6864dd242ad884a48412e41bcfc"
+    "sha": "ae01a8dd4e5df9df97a7dff0e02d10dfe9b1689eb6b923a5f7169d7a3fbd28e4"
   },
   "phases/01-math-foundations/11-singular-value-decomposition": {
     "at": "2026-10-10T12:31:14Z",
