@@ -115,34 +115,34 @@
     "sha": "ae01a8dd4e5df9df97a7dff0e02d10dfe9b1689eb6b923a5f7169d7a3fbd28e4"
   },
   "phases/01-math-foundations/11-singular-value-decomposition": {
-    "at": "2026-10-10T12:31:14Z",
+    "at": "2026-10-18T11:02:45Z",
     "model": "gemini-3.8-flash",
-    "sha": "8cd08bd71af0e84ef70159d67acf7b0781860dd567dd060b037c3923ae27c214"
+    "sha": "e6d5cdb8721a8d7d4b2062f6a4da5946123d03b3f6e72e7d2225827e2c37fd23"
   },
   "phases/01-math-foundations/12-tensor-operations": {
-    "at": "2026-10-10T12:31:47Z",
+    "at": "2026-10-18T11:06:05Z",
     "model": "gemini-3.8-flash",
-    "sha": "98beea9409bda9831f924611911ce5218d012444740a5a8a800f9c7823aaf632"
+    "sha": "8f37a3ac0484d015c9ba0ee87bbc9d9c60fe22c05f1abe7a2e6b4f83bf71dce1"
   },
   "phases/01-math-foundations/13-numerical-stability": {
-    "at": "2026-10-12T15:19:17Z",
+    "at": "2026-10-18T11:07:27Z",
     "model": "gemini-3.8-flash",
-    "sha": "1f803ae9c3db1ab75678a37007833c86479ef7810778c396201e3c5d91e731c6"
+    "sha": "12856656d74e92c2e8b1a1766f7434cff54ef1b5be8875ef1f9a9e6fdde1ca1d"
   },
   "phases/01-math-foundations/14-norms-and-distances": {
-    "at": "2026-10-12T15:20:20Z",
+    "at": "2026-10-18T11:08:33Z",
     "model": "gemini-3.8-flash",
-    "sha": "f0949b87124ae76e14ed331231e357edf7e60552dc4fadd42dee0ffed10ebeca"
+    "sha": "3458a8054e725603437b21aad1522f4a7bd503397cd25530661e68fda3c378c8"
   },
   "phases/01-math-foundations/15-statistics-for-ml": {
-    "at": "2026-10-12T15:20:57Z",
+    "at": "2026-10-18T11:09:31Z",
     "model": "gemini-3.8-flash",
-    "sha": "9770d8e715f37b25538f2c9b0e78de30b38d7c1ddccc81765b124880071e0561"
+    "sha": "4ef9d7580b4fcde317da08d2076e397cb48e48a890a1b048393ad31d647ebf75"
   },
   "phases/01-math-foundations/16-sampling-methods": {
-    "at": "2026-10-13T22:44:42Z",
+    "at": "2026-10-18T11:15:05Z",
     "model": "gemini-3.8-flash",
-    "sha": "387bb3952f9a86f59c898179ec88597a8e9719e662ecab1b6b93bd6a977c2616"
+    "sha": "d6f7bb9b2e4b703ecfc8202fdcb36f463adcd8db3aecad472bc0ce0d343aeb2b"
   },
   "phases/01-math-foundations/17-linear-systems": {
     "at": "2026-10-13T22:48:57Z",
