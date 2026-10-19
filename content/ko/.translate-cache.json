@@ -65,9 +65,9 @@
     "sha": "f8995bff8d2189e09fc41ec32c9eb6594653e1f19a9053d1c77c7abd8d41b938"
   },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
-    "at": "2026-10-17T10:38:11Z",
+    "at": "2026-10-19T13:06:18Z",
     "model": "gemini-3.8-flash",
-    "sha": "eb07ada4e15b721327061149b348bd31fe6e2a1e6d6f716681435ef998e5c63f"
+    "sha": "bb9c623a3a405f9aad08685cac764ab984fe5fac8df2a191449c1b93bc5f59df"
   },
   "phases/01-math-foundations/02-vectors-matrices-operations": {
     "at": "2026-10-17T10:38:29Z",
@@ -145,23 +145,28 @@
     "sha": "d6f7bb9b2e4b703ecfc8202fdcb36f463adcd8db3aecad472bc0ce0d343aeb2b"
   },
   "phases/01-math-foundations/17-linear-systems": {
-    "at": "2026-10-13T22:48:57Z",
+    "at": "2026-10-19T13:07:48Z",
     "model": "gemini-3.8-flash",
-    "sha": "de9a2c0f1e09351e6061834a651110bdab18ae3df534315ea2a62a33a156af49"
+    "sha": "cea0c20a413a89c9ab39e31480f1a83334d611d32cc682652d423ba268b573e7"
   },
   "phases/01-math-foundations/18-convex-optimization": {
-    "at": "2026-10-14T11:55:00Z",
+    "at": "2026-10-19T13:10:14Z",
     "model": "gemini-3.8-flash",
-    "sha": "061158e46d86c18ffeb43b730c98c52994ae863629445f6431942a368cfdb952"
+    "sha": "153f18d777cd392da2554ab9b190677f157d211ba207d86b48f89bbef709d76d"
   },
   "phases/01-math-foundations/19-complex-numbers": {
-    "at": "2026-10-14T11:59:48Z",
+    "at": "2026-10-19T13:11:12Z",
     "model": "gemini-3.8-flash",
-    "sha": "4452702ccd0d4c75a574644f277d6f6a6d87579f80395eccebdd211bdefbfd58"
+    "sha": "a08ab16aeae18285cfde9f8156502ef7c6eda2f72a4ee38b0e514806bee80e45"
   },
   "phases/01-math-foundations/20-fourier-transform": {
-    "at": "2026-10-14T12:16:07Z",
+    "at": "2026-10-19T13:12:13Z",
     "model": "gemini-3.8-flash",
-    "sha": "88d32836b77ed732bc2e2610451d4ea5509c1b20b9bb96dddc2dd3cd0bc47cff"
+    "sha": "6ef0d86a9deaba145cd232abd75377c5cd7eaf3bc3d7198eb7695beb1e5bb56f"
+  },
+  "phases/01-math-foundations/21-graph-theory": {
+    "at": "2026-10-19T13:13:03Z",
+    "model": "gemini-3.8-flash",
+    "sha": "a0457926d2720ab0189388e8a3487ff2ac75c613c6b35eabb290f9eb0a1c8353"
   }
 }
