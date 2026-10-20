@@ -203,5 +203,10 @@
     "at": "2026-10-20T11:56:31Z",
     "model": "gemini-3.8-flash",
     "sha": "bff69e9324c6c54ef76f589965a4f3df5ba5ccbbcbfad26550bc817ec1a90c74"
+  },
+  "phases/02-ml-fundamentals/07-unsupervised-learning": {
+    "at": "2026-10-20T17:04:21Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9f589f12b059d6d1b6044772c6479c01fbd0b7b330443145f31009f56828874d"
   }
 }
