@@ -208,5 +208,25 @@
     "at": "2026-10-20T17:04:21Z",
     "model": "gemini-3.8-flash",
     "sha": "9f589f12b059d6d1b6044772c6479c01fbd0b7b330443145f31009f56828874d"
+  },
+  "phases/02-ml-fundamentals/08-feature-engineering": {
+    "at": "2026-10-21T11:44:03Z",
+    "model": "gemini-3.8-flash",
+    "sha": "4b69623669fe49051971e28ec6e60f5fa84871f356cf311305400907ad5afd3b"
+  },
+  "phases/02-ml-fundamentals/09-model-evaluation": {
+    "at": "2026-10-21T11:44:56Z",
+    "model": "gemini-3.8-flash",
+    "sha": "ffa5dbf1775f0cd8008099cebb460f484e61ac51b3c0e9b665b0563cf486fa2a"
+  },
+  "phases/02-ml-fundamentals/10-bias-variance": {
+    "at": "2026-10-21T11:47:45Z",
+    "model": "gemini-3.8-flash",
+    "sha": "90827a05e5efc693817fa7586d178bd0a2a889f39fe73570c6a669b01485a9b1"
+  },
+  "phases/02-ml-fundamentals/11-ensemble-methods": {
+    "at": "2026-10-21T11:48:41Z",
+    "model": "gemini-3.8-flash",
+    "sha": "497158df5ec8f89881419cc43414a1a3dceb6ed23376dba300bdf93f04cde67b"
   }
 }
