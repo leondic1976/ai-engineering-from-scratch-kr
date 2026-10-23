@@ -125,9 +125,9 @@
     "sha": "8f37a3ac0484d015c9ba0ee87bbc9d9c60fe22c05f1abe7a2e6b4f83bf71dce1"
   },
   "phases/01-math-foundations/13-numerical-stability": {
-    "at": "2026-10-18T11:07:27Z",
+    "at": "2026-10-23T17:13:32Z",
     "model": "gemini-3.8-flash",
-    "sha": "12856656d74e92c2e8b1a1766f7434cff54ef1b5be8875ef1f9a9e6fdde1ca1d"
+    "sha": "0a2ed11f1728142676a900ccd812099c78e4429155692ca22d0b27aafd94c2e6"
   },
   "phases/01-math-foundations/14-norms-and-distances": {
     "at": "2026-10-18T11:08:33Z",
