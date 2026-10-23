@@ -10,9 +10,9 @@
     "sha": "5bcc9ca73bdf9f2a3a647d167ed00ff223a81a9a36f996ce148aa1312d545f08"
   },
   "phases/00-setup-and-tooling/03-gpu-setup-and-cloud": {
-    "at": "2026-10-15T11:25:56Z",
+    "at": "2026-10-23T11:35:41Z",
     "model": "gemini-3.8-flash",
-    "sha": "1e6fdb7c16aeab51fb498a3b0d5fe984dd1a67e082d618bf30d1081639502809"
+    "sha": "913b61e496cff6bba6c95c5121a4fa389793f5ce98ae9b7745c491158428e25a"
   },
   "phases/00-setup-and-tooling/04-apis-and-keys": {
     "at": "2026-10-15T11:26:44Z",
@@ -45,14 +45,14 @@
     "sha": "772d99967d3ccde7c765aae10f77622aa3a9db2975a6124d217c307e257dc84a"
   },
   "phases/00-setup-and-tooling/10-terminal-and-shell": {
-    "at": "2026-10-16T11:18:16Z",
+    "at": "2026-10-23T11:40:02Z",
     "model": "gemini-3.8-flash",
-    "sha": "17dc65d11d74510bada6bd4cdd1ae4bdb85849632ca0e4a999d0da53b2d5292e"
+    "sha": "5febcabad487875619e38bab7b925c05ac61d3f059cbfcb0d7d8a4902fd8e4bf"
   },
   "phases/00-setup-and-tooling/11-linux-for-ai": {
-    "at": "2026-10-16T11:18:49Z",
+    "at": "2026-10-23T11:42:20Z",
     "model": "gemini-3.8-flash",
-    "sha": "e4546b58d30ef83badb36b07dbfea227add11bf045a28780acee41f370885514"
+    "sha": "07a2808c4707f0ba4290d7c92df72e48cb09fc8a9f6e85222c4b2229b1d314af"
   },
   "phases/00-setup-and-tooling/12-debugging-and-profiling": {
     "at": "2026-10-16T11:21:10Z",
@@ -65,9 +65,9 @@
     "sha": "f8995bff8d2189e09fc41ec32c9eb6594653e1f19a9053d1c77c7abd8d41b938"
   },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
-    "at": "2026-10-19T13:06:18Z",
+    "at": "2026-10-23T11:50:43Z",
     "model": "gemini-3.8-flash",
-    "sha": "bb9c623a3a405f9aad08685cac764ab984fe5fac8df2a191449c1b93bc5f59df"
+    "sha": "f8bd6e7a8cd337ba0cb2d90a8acddb60b32c58d4dd5d27ae451181772267410c"
   },
   "phases/01-math-foundations/02-vectors-matrices-operations": {
     "at": "2026-10-17T10:38:29Z",
@@ -90,9 +90,9 @@
     "sha": "0ec6ec8f8e98d36719b21d5fe1a78c787261864eb5689b776a8d76391b04fc3f"
   },
   "phases/01-math-foundations/06-probability-and-distributions": {
-    "at": "2026-10-17T10:42:37Z",
+    "at": "2026-10-23T11:58:21Z",
     "model": "gemini-3.8-flash",
-    "sha": "9595bccbedd22dbf64a1412aebc327ba8817616da5cd2e3aa65ab4a748c1344c"
+    "sha": "a07e78b85e86e435d4afea907e6c8fdf06c004bcc76869e0dce20d7ab3ad52ed"
   },
   "phases/01-math-foundations/07-bayes-theorem": {
     "at": "2026-10-17T10:43:51Z",
@@ -100,14 +100,14 @@
     "sha": "541198f69f334fd2a40906f849b72ff0005f461e01b72b35cf11857ca347989a"
   },
   "phases/01-math-foundations/08-optimization": {
-    "at": "2026-10-17T10:44:25Z",
+    "at": "2026-10-23T12:10:16Z",
     "model": "gemini-3.8-flash",
-    "sha": "3ff003a1ae4377981812e9aa7694924fd18d70e769291ffa60d573a9aa2cd5b1"
+    "sha": "37a97829f21025866d4bd4349478fcd6572dcc734154b836ce3e69f4813cb278"
   },
   "phases/01-math-foundations/09-information-theory": {
-    "at": "2026-10-17T10:45:27Z",
+    "at": "2026-10-23T12:16:40Z",
     "model": "gemini-3.8-flash",
-    "sha": "8b84ff00a2032ab036003c7f938423ec22fe180180406efa1ca02e5ddf7c723f"
+    "sha": "1b372ebc564904598949a0b72f73be63af0fd64ce21a3fff8ec3d5822b4ec9ed"
   },
   "phases/01-math-foundations/10-dimensionality-reduction": {
     "at": "2026-10-17T15:31:31Z",

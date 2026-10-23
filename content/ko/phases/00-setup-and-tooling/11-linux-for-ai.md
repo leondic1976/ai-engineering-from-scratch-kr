@@ -1,13 +1,13 @@
 ---
 title_en: "Linux for AI"
 source: "phases/00-setup-and-tooling/11-linux-for-ai"
-source_sha: "e4546b58d30ef83b"
+source_sha: "07a2808c4707f0ba"
 model: "gemini-3.8-flash"
-translated_at: "2026-10-16"
+translated_at: "2026-10-23"
 ---
 # Linux for AI
 
-> 대부분의 AI는 Linux에서 실행됩니다. 막히지 않고 작업할 수 있을 정도의 지식은 필수적입니다.
+> 대부분의 AI는 Linux에서 실행됩니다. 막힘없이 작업할 수 있을 정도는 알아두어야 합니다.
 
 **유형:** Learn (이론)
 **사용 언어:** --
@@ -16,16 +16,16 @@ translated_at: "2026-10-16"
 
 ## 학습 목표
 
-- 명령줄에서 Linux 파일 시스템을 탐색하고 필수적인 파일 작업을 수행합니다.
-- `chmod` 및 `chown`를 사용해 파일 권한을 관리하여 "Permission denied" 오류를 해결합니다.
-- `apt`로 시스템 패키지를 설치하고 AI 작업을 위한 새로운 GPU 머신을 설정합니다.
-- 원격 머신에서 작업할 때 개발자들이 흔히 겪는 macOS와 Linux 간의 차이점을 파악합니다.
+- 명령줄에서 Linux 파일 시스템을 탐색하고 필수적인 파일 작업을 수행합니다
+- `chmod` 및 `chown`을 사용해 파일 권한을 관리하고 "Permission denied" 오류를 해결합니다
+- `apt`로 시스템 패키지를 설치하고 AI 작업을 위한 새 GPU 머신을 설정합니다
+- 원격 머신에서 작업할 때 개발자들이 흔히 겪는 macOS와 Linux의 차이점을 파악합니다
 
 ## 문제 상황
 
-개발은 macOS나 Windows에서 진행할 수 있습니다. 하지만 클라우드 GPU 머신에 SSH로 접속하거나, Lambda 인스턴스를 대여하거나, EC2 머신을 띄우는 순간 Ubuntu 환경을 마주하게 됩니다. 터미널이 유일한 인터페이스이며 Finder도, Explorer도, GUI도 존재하지 않습니다. 명령줄에서 파일 시스템을 탐색하고 패키지를 설치하며 프로세스를 관리할 수 없다면, "Linux에서 압축 푸는 법"을 구글링하는 동안 사용하지도 않는 GPU 요금만 계속 지불하게 됩니다.
+개발은 macOS나 Windows에서 할 수 있습니다. 하지만 클라우드 GPU 머신에 SSH로 접속하거나, Lambda 인스턴스를 대여하거나, EC2 머신을 생성하는 순간 Ubuntu 환경을 마주하게 됩니다. 터미널이 유일한 인터페이스입니다. Finder도, 파일 탐색기도, GUI도 없습니다. 명령줄에서 파일 시스템을 탐색하고, 패키지를 설치하고, 프로세스를 관리하지 못한다면 "Linux에서 압축 푸는 법"을 구글링하는 동안 유휴 상태의 GPU 비용만 계속 지불하게 됩니다.
 
-이 문서는 일종의 생존 가이드입니다. AI 작업을 위해 원격 Linux 머신을 다루는 데 꼭 필요한 내용만을 다루며, 군더더기는 배제합니다.
+이 문서는 서바이벌 가이드입니다. AI 작업을 위해 원격 Linux 머신을 다룰 때 필요한 내용만을 정확하게 다루며, 그 이상은 다루지 않습니다.
 
 ## 파일 시스템 구조
 
@@ -42,13 +42,13 @@ graph TD
     root --> proc["proc/ and /sys/<br/>Virtual files — kernel and hardware info"]
 ```
 
-홈 디렉터리는 `~` 또는 `/home/your-username`입니다. 대부분의 작업은 이 안에서 이루어집니다.
+홈 디렉터리는 `~` 또는 `/home/your-username`입니다. 수행하는 대부분의 작업은 이곳에서 이루어집니다.
 
 ## 필수 명령어
 
-원격 GPU 머신에서 수행하는 작업의 95%를 아우르는 15가지 명령어입니다.
+원격 GPU 머신에서 수행할 작업의 대부분을 아우르는 13가지 명령어입니다.
 
-### 경로 이동
+### 디렉터리 이동
 
 ```bash
 pwd                         # Where am I?
@@ -75,7 +75,7 @@ rm file.txt                 # Delete a file (no trash, it's gone)
 rm -rf my-dir/              # Delete a directory and everything inside
 ```
 
-`rm -rf`는 영구 삭제 명령어입니다. 실행 취소는 불가능합니다. Enter 키를 누르기 전에 경로를 반드시 다시 확인하십시오.
+`rm -rf`은 영구적입니다. 실행 취소는 불가능합니다. Enter 키를 누르기 전에 경로를 다시 한번 확인하십시오.
 
 ### 파일 읽기
 
@@ -98,9 +98,9 @@ find . -name "*.py"                 # Find all Python files under current dir
 find . -name "*.ckpt" -size +1G     # Find checkpoint files larger than 1GB
 ```
 
-## 권한
+## 권한 관리
 
-Linux의 모든 파일에는 소유자와 권한 비트가 있습니다. 스크립트가 실행되지 않거나 디렉터리에 파일을 쓸 수 없을 때 이 권한 문제가 발생합니다.
+Linux의 모든 파일에는 소유자와 권한 비트(permission bit)가 있습니다. 스크립트가 실행되지 않거나 디렉터리에 쓰기 작업을 할 수 없을 때 이 문제를 마주치게 됩니다.
 
 ```bash
 ls -l train.py
@@ -110,7 +110,7 @@ ls -l train.py
 #        ^^        everyone else: read only
 ```
 
-일반적인 해결 방법:
+흔한 해결 방법:
 
 ```bash
 chmod +x train.sh           # Make a script executable
@@ -120,11 +120,11 @@ chmod 644 config.yaml       # Owner: read+write, others: read only
 chown user:group file.txt   # Change who owns a file (needs sudo)
 ```
 
-"Permission denied"라는 메시지가 나타나면 거의 대부분 권한 문제입니다. 대부분의 경우 `chmod +x` 또는 `sudo`를 통해 해결할 수 있습니다.
+"Permission denied"라는 메시지가 나타나면 거의 대부분 권한 문제입니다. 대개의 경우 `chmod +x`이나 `sudo`로 해결할 수 있습니다.
 
 ## 패키지 관리 (apt)
 
-Ubuntu는 `apt`를 사용합니다. 시스템 수준의 소프트웨어는 이 도구를 통해 설치합니다.
+Ubuntu는 `apt`을 사용합니다. 이를 통해 시스템 수준의 소프트웨어를 설치합니다.
 
 ```bash
 sudo apt update             # Refresh the package list (always do this first)
@@ -136,7 +136,7 @@ apt list --installed        # What's installed?
 sudo apt remove htop        # Uninstall
 ```
 
-새로운 GPU 머신에 일반적으로 설치하는 패키지들:
+새로운 GPU 머신에 주로 설치하는 공통 패키지:
 
 ```bash
 sudo apt update && sudo apt install -y \
@@ -152,7 +152,7 @@ sudo apt update && sudo apt install -y \
 
 ## 사용자와 sudo
 
-일반적으로 일반 사용자로 로그인하게 됩니다. 일부 작업에는 root(관리자) 권한이 필요합니다.
+보통 일반 사용자로 로그인하게 됩니다. 일부 작업에는 root(관리자) 권한이 필요합니다.
 
 ```bash
 whoami                      # What user am I?
@@ -160,11 +160,11 @@ sudo command                # Run a single command as root
 sudo su                     # Become root (exit to go back, use sparingly)
 ```
 
-클라우드 GPU 인스턴스에서는 보통 유일한 사용자이며 이미 sudo 권한을 가지고 있습니다. 모든 작업을 root로 실행하지는 마십시오. sudo는 꼭 필요한 경우에만 사용하십시오.
+클라우드 GPU 인스턴스에서는 일반적으로 단일 사용자이며 이미 sudo 권한을 가지고 있습니다. 모든 것을 root로 실행하지 마십시오. sudo는 꼭 필요할 때만 사용해야 합니다.
 
 ## 프로세스와 systemd
 
-학습이 멈췄거나 실행 중인 작업을 확인해야 할 때:
+학습이 멈췄거나 현재 무엇이 실행 중인지 확인해야 할 때:
 
 ```bash
 htop                        # Interactive process viewer (q to quit)
@@ -186,7 +186,7 @@ sudo systemctl enable nginx         # Start automatically on boot
 
 ## 디스크 공간
 
-GPU 머신은 종종 디스크 공간이 제한적입니다. 모델과 데이터셋은 디스크를 빠르게 채웁니다.
+GPU 머신은 디스크 공간이 제한적인 경우가 많습니다. 모델과 데이터셋은 이 공간을 빠르게 채웁니다.
 
 ```bash
 df -h                       # Disk usage for all mounted drives
@@ -200,7 +200,7 @@ du -sh /data/checkpoints/   # Check how big your checkpoints are
 du -h --max-depth=1 / 2>/dev/null | sort -hr | head -20
 ```
 
-일반적인 공간 확보 방법:
+자주 사용하는 디스크 공간 정리 방법:
 
 ```bash
 # Clear pip cache
@@ -215,7 +215,7 @@ rm -rf checkpoints/epoch_01/ checkpoints/epoch_02/
 
 ## 네트워킹
 
-명령줄에서 모델을 다운로드하고 파일을 전송하며 API를 호출하게 됩니다.
+명령줄에서 모델을 다운로드하고, 파일을 전송하며, API를 호출하게 됩니다.
 
 ```bash
 # Download files
@@ -233,11 +233,11 @@ rsync -avz --progress ./data/ user@remote:/data/
 rsync -avz --progress user@remote:/results/ ./results/
 ```
 
-대용량 파일의 경우 `scp` 대신 `rsync`를 사용하십시오. 변경된 바이트만 전송하며 연결이 끊겼을 때도 안정적으로 처리할 수 있습니다.
+용량이 큰 파일은 `scp` 대신 `rsync`을 사용하십시오. 변경된 바이트만 전송하며 연결이 끊겼을 때도 복구할 수 있습니다.
 
 ## tmux: 세션 유지하기
 
-원격 머신에 SSH로 접속했을 때 노트북을 닫으면 실행 중이던 학습 작업이 강제 종료됩니다. tmux를 사용하면 이를 방지할 수 있습니다.
+원격 머신에 SSH로 접속했을 때, 노트북을 닫으면 실행 중이던 학습이 중단됩니다. tmux는 이를 방지해 줍니다.
 
 ```bash
 tmux new -s train           # Start a new session named "train"
@@ -253,11 +253,11 @@ tmux attach -t train        # Reattach to session
 # Ctrl+B, then arrow keys   # Switch between panes
 ```
 
-장시간 실행되는 학습 작업은 항상 tmux 내부에서 실행하십시오. 예외는 없습니다.
+오래 걸리는 학습 작업은 항상 tmux 내부에서 실행하십시오. 예외는 없습니다.
 
 ## Windows 사용자를 위한 WSL2
 
-Windows를 사용 중이라면 WSL2를 통해 듀얼 부팅 없이 실제 Linux 환경을 활용할 수 있습니다.
+Windows를 사용하는 경우, WSL2를 사용하면 듀얼 부팅 없이 실제 Linux 환경을 구축할 수 있습니다.
 
 ```bash
 # In PowerShell (admin)
@@ -267,26 +267,26 @@ wsl --install -d Ubuntu-24.04
 sudo apt update && sudo apt upgrade -y
 ```
 
-WSL2는 실제 Linux 커널을 실행합니다. 이 레슨의 모든 내용은 WSL2 내부에서 그대로 동작합니다. WSL 내부에서 Windows 파일은 `/mnt/c/Users/YourName/` 경로로 접근할 수 있습니다.
+WSL2는 실제 Linux 커널을 실행합니다. 이 강의의 모든 내용은 WSL2 내부에서 그대로 작동합니다. WSL 내부에서는 `/mnt/c/Users/YourName/` 경로를 통해 Windows 파일에 접근할 수 있습니다.
 
-Windows 쪽에 NVIDIA 드라이버가 설치되어 있다면 GPU 패스스루(passthrough)가 작동합니다. Linux 드라이버가 아닌 Windows용 NVIDIA 드라이버를 설치하면 WSL2 내부에서 CUDA를 사용할 수 있습니다.
+GPU 패스스루(passthrough)는 Windows 쪽에 NVIDIA 드라이버가 설치되어 있으면 정상 작동합니다. Linux용이 아닌 Windows용 NVIDIA 드라이버를 설치하면 WSL2 내부에서 CUDA를 사용할 수 있습니다.
 
-## 주의 사항: macOS에서 Linux로 전환 시
+## 주의사항: macOS에서 Linux로 전환 시
 
-macOS 환경에 익숙한 경우 혼란을 줄 수 있는 부분들입니다.
+macOS를 사용하다가 넘어왔을 때 혼란을 줄 수 있는 부분들입니다.
 
 | macOS | Linux | 참고 사항 |
 |-------|-------|-------|
-| `brew install` | `sudo apt install` | 패키지 이름이 다를 수 있습니다. `brew install htop`와 `sudo apt install htop`는 동일하게 동작하지만 `brew install readline`와 `sudo apt install libreadline-dev`는 다릅니다. |
-| `open file.txt` | `xdg-open file.txt` | 원격 머신에는 GUI가 없습니다. `cat`나 `less`를 사용하십시오. |
-| `pbcopy` / `pbpaste` | 사용 불가 | SSH를 통한 클립보드 파이프 입출력은 지원되지 않습니다. |
-| `~/.zshrc` | `~/.bashrc` | macOS는 zsh가 기본값입니다. 대부분의 Linux 서버는 bash를 사용합니다. |
-| `/opt/homebrew/` | `/usr/bin/`, `/usr/local/bin/` | 바이너리가 위치하는 경로가 다릅니다. |
-| `sed -i '' 's/a/b/' file` | `sed -i 's/a/b/' file` | macOS의 sed는 `-i` 뒤에 빈 문자열이 필요합니다. Linux는 필요하지 않습니다. |
-| 대소문자 구분 없는 파일 시스템 | 대소문자 구분 파일 시스템 | Linux에서 `Model.py`와 `model.py`는 서로 다른 두 개의 파일입니다. |
-| 줄 바꿈 `\n` | 줄 바꿈 `\n` | 동일합니다. 단, Windows는 `\r\n`를 사용하므로 bash 스크립트 실행이 실패할 수 있습니다. `dos2unix`로 해결할 수 있습니다. |
+| `brew install` | `sudo apt install` | 패키지 이름이 다른 경우가 있습니다. `brew install htop`과 `sudo apt install htop`은 동일하게 동작하지만, `brew install readline`과 `sudo apt install libreadline-dev`는 그렇지 않습니다. |
+| `open file.txt` | `xdg-open file.txt` | 하지만 원격 머신에는 GUI가 없습니다. `cat`나 `less`을 사용하십시오. |
+| `pbcopy` / `pbpaste` | 지원 안 됨 | SSH 환경에서는 클립보드로/클립보드로부터의 파이프 처리가 불가능합니다. |
+| `~/.zshrc` | `~/.bashrc` | macOS의 기본 쉘은 zsh입니다. 대부분의 Linux 서버는 bash를 사용합니다. |
+| `/opt/homebrew/` | `/usr/bin/`, `/usr/local/bin/` | 바이너리가 저장되는 위치가 다릅니다. |
+| `sed -i '' 's/a/b/' file` | `sed -i 's/a/b/' file` | macOS의 sed는 `-i` 뒤에 빈 문자열이 필요하지만 Linux는 그렇지 않습니다. |
+| 대소문자 미구분 파일 시스템 | 대소문자 구분 파일 시스템 | Linux에서는 `Model.py`와 `model.py`가 서로 다른 두 개의 파일입니다. |
+| 줄 바꿈 `\n` | 줄 바꿈 `\n` | 동일합니다. 하지만 Windows는 `\r\n`을 사용하여 bash 스크립트를 깨뜨릴 수 있습니다. 해결하려면 `dos2unix`를 실행하십시오. |
 
-## 빠른 참조표
+## 빠른 참조 카드
 
 ```
 Navigation:     pwd, ls, cd, find
@@ -307,20 +307,20 @@ s0-process-fork
 
 ## 실습 과제
 
-1. 임의의 Linux 머신에 SSH로 접속(또는 WSL2 실행)하여 홈 디렉터리로 이동합니다. 프로젝트 폴더를 만들고, 그 안에 `touch`로 세 개의 빈 파일을 생성한 다음 `ls -la`로 목록을 확인합니다.
-2. apt로 `htop`를 설치하고 실행하여 가장 많은 메모리를 사용하고 있는 프로세스를 확인합니다.
-3. tmux 세션을 시작하고, 그 안에서 `sleep 300`를 실행한 후 세션을 분리(detach)하고, 세션 목록을 확인한 다음 다시 연결(reattach)합니다.
-4. `df -h`를 사용해 사용 가능한 디스크 공간을 확인한 다음, `du -sh ~/.cache/*`를 사용해 캐시 디렉터리에서 공간을 차지하고 있는 항목을 찾습니다.
-5. 로컬 머신에서 원격 머신으로 `scp`를 사용해 파일을 전송한 다음, `rsync`로 동일한 전송을 수행하고 두 방식의 차이를 비교해 봅니다.
+1. Linux 머신에 SSH로 접속하거나(또는 WSL2를 열고) 홈 디렉터리로 이동합니다. 프로젝트 폴더를 만들고, 그 안에 `touch`으로 빈 파일 3개를 생성한 다음 `ls -la`로 목록을 확인합니다.
+2. apt로 `htop`를 설치하고 실행하여 어떤 프로세스가 메모리를 가장 많이 사용하고 있는지 확인합니다.
+3. tmux 세션을 시작하고, 그 안에서 `sleep 300`을 실행한 뒤, 세션에서 분리(detach)하고, 세션 목록을 확인한 다음 다시 연결(reattach)합니다.
+4. `df -h`를 사용해 사용 가능한 디스크 공간을 확인한 다음, `du -sh ~/.cache/*`를 사용해 캐시에서 공간을 많이 차지하는 항목을 찾습니다.
+5. `scp`을 사용하여 로컬 머신에서 원격 머신으로 파일을 전송한 다음, `rsync`로 동일한 전송을 수행하고 두 경험을 비교해 봅니다.
 
 ### 힌트
 
-**실습 1.** `cd ~`, `mkdir`를 사용해 새 폴더로 `cd`한 다음 세 개의 파일 이름을 지정하여 `touch`를 실행합니다. `ls -la` 출력에서 세 파일의 크기가 0이고 소유자가 본인의 사용자 이름으로 표시되는지 확인합니다.
+**과제 1.** `cd ~`, `mkdir`를 사용하고 새 폴더로 `cd`한 다음, 세 개의 파일 이름과 함께 `touch`을 실행합니다. `ls -la` 출력에서 세 파일의 크기가 0이고 소유자가 본인의 사용자 이름으로 표시되는지 확인합니다.
 
-**실습 2.** `sudo apt install -y htop`로 설치하고 실행한 뒤 `F6`를 누르거나 컬럼 이름을 클릭하여 `MEM%` 기준으로 정렬합니다. 목록 최상단에 위치한 프로세스가 메모리를 가장 많이 사용하는 프로세스입니다.
+**과제 2.** `sudo apt install -y htop`으로 설치하고 실행한 뒤, `F6`를 누르거나(또는 열 이름을 클릭하여) `MEM%` 기준으로 정렬합니다. 목록의 맨 위에 있는 프로세스가 메모리를 가장 많이 사용하는 프로세스입니다.
 
-**실습 3.** 본문의 `tmux new -s train`를 사용해 `sleep 300`를 실행하고, `Ctrl+B`를 누른 다음 `d`를 눌러 분리합니다. `tmux ls`를 실행해 세션을 확인한 뒤 `tmux attach -t train`를 실행합니다. 이때 `sleep`가 여전히 실행 중이어야 합니다.
+**과제 3.** 본문의 `tmux new -s train` 명령을 사용하고, `sleep 300`을 실행한 뒤, `Ctrl+B`에 이어 `d`를 눌러 세션에서 분리합니다. `tmux ls`을 실행하여 세션을 확인한 다음 `tmux attach -t train`를 실행합니다. `sleep` 프로세스가 여전히 실행 중이어야 합니다.
 
-**실습 4.** `df -h`를 실행하고 홈 폴더가 위치한 파일 시스템의 `Avail` 컬럼을 확인합니다. 그런 다음 `du -sh ~/.cache/* | sort -h`를 실행하여 가장 큰 용량의 폴더가 마지막 줄에 출력되도록 합니다.
+**과제 4.** `df -h`을 실행하고 홈 폴더가 위치한 파일 시스템의 `Avail` 열을 확인합니다. 그런 다음 가장 큰 폴더가 마지막 줄에 나타나도록 `du -sh ~/.cache/* | sort -h`를 실행합니다.
 
-**실습 5.** `scp file.txt user@host:~/`로 파일을 복사한 다음 동일한 파일에 대해 `rsync -avP file.txt user@host:~/`를 실행합니다. `rsync` 명령을 한 번 더 실행해 보면, 원격 머신의 파일이 변경되지 않았기 때문에 거의 아무것도 전송하지 않는 것을 확인할 수 있습니다.
+**과제 5.** `scp file.txt user@host:~/`으로 파일을 복사한 다음 동일한 파일에 대해 `rsync -avP file.txt user@host:~/`을 실행합니다. `rsync` 명령을 두 번째로 실행해 봅니다. 원격 쪽의 파일이 변경되지 않았기 때문에 거의 아무것도 전송하지 않습니다.
