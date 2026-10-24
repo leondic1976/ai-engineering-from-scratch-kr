@@ -140,9 +140,9 @@
     "sha": "4ef9d7580b4fcde317da08d2076e397cb48e48a890a1b048393ad31d647ebf75"
   },
   "phases/01-math-foundations/16-sampling-methods": {
-    "at": "2026-10-18T11:15:05Z",
+    "at": "2026-10-24T11:01:51Z",
     "model": "gemini-3.8-flash",
-    "sha": "d6f7bb9b2e4b703ecfc8202fdcb36f463adcd8db3aecad472bc0ce0d343aeb2b"
+    "sha": "5d04a2aa6d6b06c1632011d7fb65a4a8307b0ad057db4237db2b1d271b09428f"
   },
   "phases/01-math-foundations/17-linear-systems": {
     "at": "2026-10-19T13:07:48Z",
@@ -150,9 +150,9 @@
     "sha": "cea0c20a413a89c9ab39e31480f1a83334d611d32cc682652d423ba268b573e7"
   },
   "phases/01-math-foundations/18-convex-optimization": {
-    "at": "2026-10-19T13:10:14Z",
+    "at": "2026-10-24T11:23:00Z",
     "model": "gemini-3.8-flash",
-    "sha": "153f18d777cd392da2554ab9b190677f157d211ba207d86b48f89bbef709d76d"
+    "sha": "72524ce9415bddec5e280f607db73fd8d62c633e402433e07be593fbd525dc31"
   },
   "phases/01-math-foundations/19-complex-numbers": {
     "at": "2026-10-19T13:11:12Z",
@@ -160,19 +160,19 @@
     "sha": "a08ab16aeae18285cfde9f8156502ef7c6eda2f72a4ee38b0e514806bee80e45"
   },
   "phases/01-math-foundations/20-fourier-transform": {
-    "at": "2026-10-19T13:12:13Z",
+    "at": "2026-10-24T11:28:44Z",
     "model": "gemini-3.8-flash",
-    "sha": "6ef0d86a9deaba145cd232abd75377c5cd7eaf3bc3d7198eb7695beb1e5bb56f"
+    "sha": "cfe858731f5cdeadd7047837a44510d797db5009cce9a8a9d98359ac42db2da4"
   },
   "phases/01-math-foundations/21-graph-theory": {
-    "at": "2026-10-19T13:13:03Z",
+    "at": "2026-10-24T11:33:17Z",
     "model": "gemini-3.8-flash",
-    "sha": "a0457926d2720ab0189388e8a3487ff2ac75c613c6b35eabb290f9eb0a1c8353"
+    "sha": "5752ed6f872ea10f2dd68a5ef93766f214b3ed60c4ca786006d0c90aae1506fe"
   },
   "phases/01-math-foundations/22-stochastic-processes": {
-    "at": "2026-10-19T22:22:48Z",
+    "at": "2026-10-24T11:38:06Z",
     "model": "gemini-3.8-flash",
-    "sha": "b2dd2a4a177a706a931de2c4d15daad61a9ea933b6c6c8dbc32d517ae556d211"
+    "sha": "2c438ab5ccab9e2916721ba1cda63f9ba53deab638d421cd89a02173206acb8d"
   },
   "phases/02-ml-fundamentals/01-what-is-machine-learning": {
     "at": "2026-10-20T11:35:11Z",
