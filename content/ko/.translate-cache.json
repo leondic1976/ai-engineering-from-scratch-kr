@@ -130,9 +130,9 @@
     "sha": "0a2ed11f1728142676a900ccd812099c78e4429155692ca22d0b27aafd94c2e6"
   },
   "phases/01-math-foundations/14-norms-and-distances": {
-    "at": "2026-10-18T11:08:33Z",
+    "at": "2026-10-24T04:35:15Z",
     "model": "gemini-3.8-flash",
-    "sha": "3458a8054e725603437b21aad1522f4a7bd503397cd25530661e68fda3c378c8"
+    "sha": "12f5a9c47e8c915d8e470b7426c03f7ce3dbe3d391f0af127438e95e7635d716"
   },
   "phases/01-math-foundations/15-statistics-for-ml": {
     "at": "2026-10-18T11:09:31Z",
