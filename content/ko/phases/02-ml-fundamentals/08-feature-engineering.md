@@ -1,11 +1,11 @@
 ---
 title_en: "Feature Engineering & Selection"
 source: "phases/02-ml-fundamentals/08-feature-engineering"
-source_sha: "4b69623669fe4905"
+source_sha: "ae02a8730059df06"
 model: "gemini-3.8-flash"
-translated_at: "2026-10-21"
+translated_at: "2026-10-25"
 ---
-# 특성 공학 및 선택 (Feature Engineering & Selection)
+# Feature Engineering & Selection
 
 > 좋은 특성 하나는 천 개의 데이터 포인트만큼의 가치가 있습니다.
 
@@ -14,26 +14,26 @@ translated_at: "2026-10-21"
 **선수 레슨:** Phase 1 (Statistics for ML, Linear Algebra), Phase 2 Lessons 1-7
 **소요 시간:** ~90분
 
-## 학습 목표
+## Learning Objectives
 
-- 수치형 변환(표준화, 최소-최대 스케일링, 로그 변환, 비닝)을 구현하고 각 변환이 적절한 시점을 설명합니다.
-- 범주형 특성을 위한 원-핫, 레이블, 타깃 인코딩을 구축하고 타깃 인코딩의 데이터 누출(data leakage) 위험을 식별합니다.
-- 밑바닥부터 TF-IDF 벡터라이저를 구현하고, 텍스트 분류에서 이것이 단순 단어 빈도보다 뛰어난 성능을 보이는 이유를 설명합니다.
-- 차원 축소를 위해 필터 기반 특성 선택(분산 임계값, 상관관계, 상호 정보량)을 적용합니다.
+- 수치형 변환(표준화, min-max 스케일링, 로그 변환, 비닝)을 구현하고 각 변환이 적절한 상황을 설명합니다.
+- 범주형 특성을 위한 원-핫(one-hot), 레이블(label), 타깃(target) 인코딩을 구축하고 타깃 인코딩의 데이터 누수(data leakage) 위험을 식별합니다.
+- TF-IDF 벡터라이저를 밑바닥부터 구축하고 텍스트 분류에서 단순 단어 빈도보다 뛰어난 성능을 보이는 이유를 설명합니다.
+- 필터 기반 특성 선택(분산 임계값, 상관관계, 상호 정보량)을 적용하여 차원을 축소합니다.
 
-## 문제 정의
+## The Problem
 
-데이터셋이 주어졌습니다. 알고리즘을 선택하고, 모델을 훈련합니다. 결과는 평범합니다. 더 정교한 알고리즘을 시도해 봅니다. 여전히 평범합니다. 일주일 동안 하이퍼파라미터 튜닝에 매달립니다. 미미한 개선에 그칩니다.
+데이터셋이 있습니다. 알고리즘을 선택합니다. 학습을 진행합니다. 결과는 그저 그렇습니다. 더 화려한 알고리즘을 시도해 봅니다. 여전히 그저 그렇습니다. 일주일 동안 하이퍼파라미터를 튜닝합니다. 개선은 미미합니다.
 
-그런 다음 누군가가 원시 데이터를 더 나은 특성으로 변환하자, 단순한 로지스틱 회귀 모델이 여러분이 튜닝한 그래디언트 부스팅 앙상블 모델을 뛰어넘습니다.
+그런 다음 누군가가 원시 데이터를 더 나은 특성으로 변환하자, 단순한 로지스틱 회귀가 공들여 튜닝한 그래디언트 부스팅 앙상블을 이겨버립니다.
 
-이런 일은 빈번하게 일어납니다. 전통적인 머신러닝에서는 알고리즘의 선택보다 데이터 표현(representation)이 훨씬 더 중요합니다. "면적"과 "침실 수"가 포함된 주택 가격 예측 모델은 학습 알고리즘이 아무리 정교하더라도 "주소 원시 문자열"만 있는 모델을 압도합니다. 알고리즘은 제공된 데이터 내에서만 작동할 수 있기 때문입니다.
+이러한 일은 비일비재하게 일어납니다. 고전적 ML에서는 알고리즘의 선택보다 데이터의 표현(representation)이 훨씬 더 중요합니다. "평방피트 면적"과 "침실 수"가 포함된 주택 가격 모델은 학습기가 아무리 정교하더라도 "원시 문자열 형태의 주소"만 있는 모델을 압도합니다. 알고리즘은 제공된 데이터만을 가지고 작업할 수 있을 뿐입니다.
 
-특성 공학(feature engineering)은 모델이 패턴을 더 쉽게 찾을 수 있도록 원시 데이터를 표현으로 변환하는 과정입니다. 특성 선택(feature selection)은 신호(signal)를 추가하지 않고 노이즈만 더하는 특성을 제거하는 과정입니다. 이 둘은 전통적인 머신러닝에서 가장 큰 영향을 미치는 핵심 활동입니다.
+특성 공학(feature engineering)은 모델이 패턴을 더 쉽게 찾을 수 있도록 원시 데이터를 표현으로 변환하는 과정입니다. 특성 선택(feature selection)은 신호를 더하지 않고 노이즈만 더하는 특성을 버리는 과정입니다. 이 둘은 고전적 ML에서 가장 레버리지가 높은 활동입니다.
 
-## 핵심 개념
+## The Concept
 
-### 특성 파이프라인 (Feature Pipeline)
+### The Feature Pipeline
 
 ```mermaid
 flowchart LR
@@ -48,33 +48,33 @@ flowchart LR
     G --> H[Model-Ready Data]
 ```
 
-### 수치형 특성 (Numerical Features)
+### Numerical Features
 
-원시 수치 데이터는 모델에 바로 투입하기 적합하지 않은 경우가 많습니다. 일반적인 변환 기법은 다음과 같습니다.
+원시 숫자는 모델에 바로 사용할 수 있는 상태인 경우가 드뭅니다. 흔히 쓰이는 변환은 다음과 같습니다.
 
-**스케일링(Scaling):** 거리 기반 알고리즘(K-Means, KNN, SVM)이 모든 특성을 동등하게 다루도록 특성들을 동일한 범위로 맞춥니다. 최소-최대 스케일링(min-max scaling)은 값을 [0, 1] 범위로 변환합니다. 표준화(standardization, z-score)는 평균=0, 표준편차=1로 변환합니다.
+**스케일링(Scaling):** 거리 기반 알고리즘(K-Means, KNN, SVM)이 모든 특성을 동등하게 다루도록 특성들을 동일한 범위에 맞춥니다. Min-max 스케일링은 [0, 1] 범위로 매핑합니다. 표준화(standardization, z-score)는 평균=0, 표준편차=1로 매핑합니다.
 
-**로그 변환(Log transform):** 오른쪽으로 치우친(right-skewed) 분포(소득, 인구, 단어 빈도 등)를 압축합니다. 곱셈 관계를 덧셈 관계로 변환합니다.
+**로그 변환(Log transform):** 오른쪽으로 치우친(right-skewed) 분포(소득, 인구, 단어 빈도)를 압축합니다. 곱셈 관계를 덧셈 관계로 바꿉니다.
 
-**비닝(Binning):** 연속형 값을 범주형으로 변환합니다. 특성과 타깃 간의 관계가 비선형적이면서 계단식 형태를 띨 때 유용합니다(예: 연령대).
+**비닝(Binning):** 연속형 값을 범주로 변환합니다. 특성과 타깃 간의 관계가 비선형적이면서 계단식일 때 유용합니다(예: 연령대).
 
-**다항 특성(Polynomial features):** $x^2$, $x^3$, $x_1 x_2$ 등의 항을 생성합니다. 선형 모델이 더 많은 특성을 대가로 비선형 관계를 포착할 수 있게 돕습니다.
+**다항 특성(Polynomial features):** $x^2$, $x^3$, $x_1 x_2$ 항을 생성합니다. 더 많은 특성을 사용하는 대가로 선형 모델이 비선형 관계를 포착할 수 있게 해줍니다.
 
-### 범주형 특성 (Categorical Features)
+### Categorical Features
 
-모델은 숫자를 필요로 합니다. 따라서 범주는 인코딩이 필요합니다.
+모델에는 숫자가 필요합니다. 범주는 인코딩이 필요합니다.
 
-**원-핫 인코딩(One-hot encoding):** 각 범주마다 이진 열을 생성합니다. "color = red/blue/green"은 is_red, is_blue, is_green 세 개의 열이 됩니다. 카디널리티(cardinality, 고유 범주 수)가 낮은 특성에는 잘 작동하지만, 범주 수가 많아지면 차원이 급증합니다.
+**원-핫 인코딩(One-hot encoding):** 각 범주에 대해 이진 열을 생성합니다. "color = red/blue/green"은 세 개의 열(is_red, is_blue, is_green)이 됩니다. 카디널리티(cardinality)가 낮은 특성에는 잘 작동하지만, 범주가 많아지면 열의 수가 급증합니다.
 
-**레이블 인코딩(Label encoding):** 각 범주를 정수에 매핑합니다(red=0, blue=1, green=2). 잘못된 순서 관계를 부여할 수 있습니다(모델이 green > blue > red라고 인식할 위험). 개별 값을 기준으로 분기하는 트리 기반 모델에만 적합합니다.
+**레이블 인코딩(Label encoding):** 각 범주를 정수에 매핑합니다(red=0, blue=1, green=2). 잘못된 순서 관계가 도입됩니다(모델이 green > blue > red로 생각할 수 있습니다). 개별 값을 기준으로 분기하는 트리 기반 모델에만 적합합니다.
 
-**타깃 인코딩(Target encoding):** 각 범주를 해당 범주에 속한 타깃 변수의 평균값으로 대체합니다. 강력하지만 위험합니다. 데이터 누출(data leakage) 위험이 큽니다. 반드시 훈련 데이터에서만 계산하여 테스트 데이터에 적용해야 합니다.
+**타깃 인코딩(Target encoding):** 각 범주를 해당 범주의 타깃 변수 평균값으로 대체합니다. 강력하지만 위험합니다. 데이터 누수 위험이 높습니다. 반드시 훈련 데이터에서만 계산하여 테스트 데이터에 적용해야 합니다.
 
-### 텍스트 특성 (Text Features)
+### Text Features
 
-**카운트 벡터라이저(Count vectorizer):** 문서 내 각 단어의 등장 횟수를 셉니다. "the cat sat on the mat"은 {the: 2, cat: 1, sat: 1, on: 1, mat: 1}이 됩니다.
+**카운트 벡터라이저(Count vectorizer):** 문서에서 각 단어가 나타나는 횟수를 셉니다. "the cat sat on the mat"은 {the: 2, cat: 1, sat: 1, on: 1, mat: 1}이 됩니다.
 
-**TF-IDF:** 단어 빈도-역문서 빈도(Term Frequency-Inverse Document Frequency)의 약어입니다. 여러 문서에 걸쳐 단어가 얼마나 고유한지에 따라 가중치를 부여합니다. "the"와 같은 흔한 단어는 낮은 가중치를, 드물고 구별력 있는 단어는 높은 가중치를 받습니다.
+**TF-IDF:** 단어 빈도-역문서 빈도(Term Frequency-Inverse Document Frequency)의 약자입니다. 전체 문서에 걸쳐 단어가 얼마나 고유한지에 따라 가중치를 부여합니다. "the"와 같은 흔한 단어는 낮은 가중치를 받습니다. 드물고 구별력이 있는 단어는 높은 가중치를 받습니다.
 
 ```math
 \begin{aligned}
@@ -84,42 +84,42 @@ flowchart LR
 \end{aligned}
 ```
 
-### 결측치 처리 (Missing Values)
+### Missing Values
 
-실제 데이터에는 결측치가 존재합니다. 주요 전략은 다음과 같습니다.
+실제 데이터에는 결측치가 있습니다. 처리 전략은 다음과 같습니다.
 
-- **행 삭제:** 결측 데이터가 극히 드물고 무작위로 발생한 경우에만 사용합니다.
-- **평균/중앙값 대체(imputation):** 단순하며 분포 형태를 보존합니다(중앙값은 이상치에 더 강건합니다).
-- **최빈값 대체:** 범주형 특성에 적합합니다.
-- **지시자 열(Indicator column) 추가:** 대체하기 전에 "was_this_missing"이라는 이진 열을 추가합니다. 데이터가 누락되었다는 사실 자체가 유용한 정보일 수 있습니다.
-- **전진/후진 채우기(Forward/backward fill):** 시계열 데이터에 사용합니다.
+- **행 삭제(Drop rows):** 결측 데이터가 드물고 무작위로 발생할 때만 사용합니다.
+- **평균/중앙값 대체(Mean/median imputation):** 단순하며 특성의 중심값을 유지하지만(중앙값이 이상치에 더 견고함), 분산을 줄이고 모든 대체 값을 하나의 스파이크로 몰아넣어 분포 형태를 바꿉니다.
+- **최빈값 대체(Mode imputation):** 범주형 특성에 사용합니다.
+- **표시자 열(Indicator column):** 대체하기 전에 "was_this_missing"이라는 이진 열을 추가합니다. 데이터가 결측되었다는 사실 자체가 유의미한 정보일 수 있습니다.
+- **전방/후방 채우기(Forward/backward fill):** 시계열 데이터에 사용합니다.
 
-### 특성 상호작용 (Feature Interaction)
+### Feature Interaction
 
-때로는 두 특성의 조합 속에 관계가 숨어 있습니다. "키"와 "몸무게" 각각보다는 $\text{BMI} = \text{weight} / \text{height}^2$가 훨씬 더 높은 예측력을 가질 수 있습니다. 특성 상호작용은 특성 공간을 크게 늘리므로, 도메인 지식을 활용해 적절한 특성을 골라내야 합니다.
+때로는 관계가 조합 속에 존재합니다. "키"와 "몸무게"는 단독으로는 $\text{BMI} = \text{weight} / \text{height}^2$에 비해 예측력이 떨어집니다. 특성 상호작용은 특성 공간을 배수로 늘리므로, 도메인 지식을 활용해 올바른 조합을 선택해야 합니다.
 
-### 특성 선택 (Feature Selection)
+### Feature Selection
 
-특성이 많다고 항상 좋은 것은 아닙니다. 무관한 특성은 노이즈를 더하고, 훈련 시간을 늘리며, 과적합(overfitting)을 유발할 수 있습니다.
+특성이 많다고 항상 더 좋은 것은 아닙니다. 무관한 특성은 노이즈를 추가하고, 학습 시간을 늘리며, 과적합(overfitting)을 유발할 수 있습니다.
 
-**필터 방식(Filter methods, 모델 적용 전):**
-- 상관관계(Correlation): 서로 높은 상관관계를 보이는(중복된) 특성을 제거합니다.
+**필터 기법(모델 전 단계):**
+- 상관관계: 서로 높은 상관관계를 보이는(중복된) 특성을 제거합니다.
 - 상호 정보량(Mutual information): 한 특성을 아는 것이 타깃에 대한 불확실성을 얼마나 줄여주는지 측정합니다.
-- 분산 임계값(Variance threshold): 변화가 거의 없는 특성을 제거합니다.
+- 분산 임계값(Variance threshold): 거의 변하지 않는 특성을 제거합니다.
 
-**래퍼 방식(Wrapper methods, 모델 기반):**
-- L1 규제(Lasso): 관련 없는 특성의 가중치를 정확히 0으로 만듭니다.
-- 재귀적 특성 제거(Recursive feature elimination): 훈련 후 가장 덜 중요한 특성을 제거하는 과정을 반복합니다.
+**래퍼 기법(모델 기반):**
+- L1 정규화(Lasso): 무관한 특성의 가중치를 정확히 0으로 만듭니다.
+- 반복적 특성 제거(Recursive feature elimination): 학습 후 가장 덜 중요한 특성을 제거하고 이를 반복합니다.
 
-**특성 선택이 중요한 이유:** 좋은 특성 10개를 가진 모델이 대체로 좋은 특성 10개와 노이즈 특성 90개를 가진 모델보다 성능이 뛰어납니다. 노이즈 특성은 일반화되지 않는 훈련 데이터의 패턴에 모델이 과적합할 빌미를 제공하기 때문입니다.
+**선택이 중요한 이유:** 좋은 특성 10개를 가진 모델은 대체로 좋은 특성 10개와 노이즈 특성 90개를 가진 모델보다 성능이 뛰어납니다. 노이즈 특성은 일반화되지 않는 훈련 데이터의 패턴에 모델이 과적합될 기회를 제공합니다.
 
 ```figure
 feature-scaling
 ```
 
-## 직접 구현하기
+## Build It
 
-### 1단계: 밑바닥부터 수치형 변환 구현하기
+### Step 1: Numerical transforms from scratch
 
 ```python
 import math
@@ -171,7 +171,7 @@ def polynomial_features(row, degree=2):
     return result
 ```
 
-### 2단계: 밑바닥부터 범주형 인코딩 구현하기
+### Step 2: Categorical encoding from scratch
 
 ```python
 def one_hot_encode(values):
@@ -213,7 +213,7 @@ def target_encode(feature_values, target_values, smoothing=10):
     return [encoding[v] for v in feature_values], encoding
 ```
 
-### 3단계: 밑바닥부터 텍스트 특성 구현하기
+### Step 3: Text features from scratch
 
 ```python
 def count_vectorize(documents):
@@ -272,7 +272,7 @@ def tfidf(documents):
     return vectors, vocab
 ```
 
-### 4단계: 밑바닥부터 결측치 대체 구현하기
+### Step 4: Missing value imputation from scratch
 
 ```python
 def impute_mean(values):
@@ -310,7 +310,7 @@ def add_missing_indicator(values):
     return [0 if v is not None else 1 for v in values]
 ```
 
-### 5단계: 밑바닥부터 특성 선택 구현하기
+### Step 5: Feature selection from scratch
 
 ```python
 def correlation(x, y):
@@ -393,7 +393,7 @@ def remove_correlated(features, threshold=0.9):
     return [i for i in range(n_features) if i not in to_remove]
 ```
 
-### 6단계: 전체 파이프라인 및 데모
+### Step 6: Full pipeline and demo
 
 ```python
 import random
@@ -532,9 +532,9 @@ if __name__ == "__main__":
         print(f"    {feature_names[j]}: r={corr:.4f}")
 ```
 
-## 적용하기
+## Use It
 
-scikit-learn을 사용하면 이러한 변환을 조합 가능한 파이프라인으로 구성할 수 있습니다.
+scikit-learn을 사용하면 이러한 변환을 구성 가능한 파이프라인으로 만들 수 있습니다.
 
 ```python
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures
@@ -559,34 +559,34 @@ preprocessor = ColumnTransformer([
 ])
 ```
 
-직접 구현한 코드는 각 변환 내부에서 어떤 일이 일어나는지 정확하게 보여줍니다. 라이브러리 버전은 예외 처리, 희소 행렬(sparse matrix) 지원, 파이프라인 구성 기능 등을 추가로 제공하지만, 수학적 원리는 완전히 동일합니다.
+밑바닥부터 구현한 버전은 각 변환 내부에서 정확히 어떤 일이 일어나는지 보여줍니다. 라이브러리 버전은 예외 케이스 처리, 희소 행렬(sparse matrix) 지원, 파이프라인 구성 기능을 추가하지만 수학적 원리는 동일합니다.
 
-## 배포하기
+## Ship It
 
-본 레슨의 결과물:
-- `outputs/prompt-feature-engineer.md` - 원시 데이터로부터 체계적으로 특성을 엔지니어링하기 위한 프롬프트
+이 레슨을 통해 다음 결과물이 생성됩니다.
+- `outputs/prompt-feature-engineer.md` - 원시 데이터로부터 특성을 체계적으로 엔지니어링하기 위한 프롬프트
 
-## 연습 문제
+## Exercises
 
-1. 수치형 변환에 로버스트 스케일링(robust scaling, 평균과 표준편차 대신 중앙값과 사분위간 범위 사용)을 추가하세요. 극단적인 이상치가 있는 데이터에서 이를 표준 스케일링과 비교해 보세요.
-2. LOO(leave-one-out) 타깃 인코딩을 구현하세요. 각 행에 대해 해당 행 자신의 타깃 값을 제외하고 타깃 평균을 계산합니다. 단순 타깃 인코딩에 비해 이것이 어떻게 과적합을 줄이는지 보여주세요.
-3. 분산 임계값, 상관관계 필터링, 상호 정보량 순위 지정을 결합한 자동 특성 선택 파이프라인을 구축하세요. 이를 주택 데이터셋에 적용하고, 단순 선형 회귀를 사용하여 전체 특성을 사용했을 때와 선택된 특성만 사용했을 때의 모델 성능을 비교해 보세요.
+1. 수치형 변환에 로버스트 스케일링(robust scaling, 평균과 표준편차 대신 중앙값과 사분위간 범위를 사용)을 추가하세요. 극단적인 이상치가 있는 데이터에서 이를 표준 스케일링과 비교해 보세요.
+2. 리브-원-아웃(leave-one-out) 타깃 인코딩을 구현하세요. 각 행에 대해 해당 행 자체의 타깃 값을 제외하고 타깃 평균을 계산합니다. 이것이 단순 타깃 인코딩에 비해 과적합을 어떻게 줄이는지 보여주세요.
+3. 분산 임계값, 상관관계 필터링, 상호 정보량 순위 지정을 결합한 자동화된 특성 선택 파이프라인을 구축하세요. 이를 주택 데이터셋에 적용하고 전체 특성을 사용했을 때와 선택된 특성을 사용했을 때의 모델 성능(단순 선형 회귀 사용)을 비교해 보세요.
 ## 핵심 용어
 
 | 용어 | 흔히 하는 말 | 실제 의미 |
 |------|----------------|----------------------|
-| 피처 엔지니어링(Feature engineering) | "새로운 열 만들기" | 원시 데이터를 모델이 패턴을 쉽게 파악할 수 있는 표현으로 변환하는 작업 |
-| 표준화(Standardization) | "정규분포처럼 만들기" | 평균을 빼고 표준편차로 나누어 피처가 평균=0, 표준편차=1을 갖도록 만드는 작업 |
-| 원-핫 인코딩(One-hot encoding) | "더미 변수 만들기" | 범주당 하나의 이진 열을 생성하여, 각 행마다 정확히 하나의 열만 1이 되도록 하는 방식 |
-| 타깃 인코딩(Target encoding) | "정답을 사용해 인코딩하기" | 과적합(overfitting)을 방지하기 위한 평활화(smoothing)와 함께, 각 범주를 해당 범주의 평균 타깃값으로 대체하는 방식 |
-| TF-IDF | "고급 단어 빈도 계산" | 단어 빈도(Term Frequency)에 역문서 빈도(Inverse Document Frequency)를 곱한 값: 말뭉치(corpus) 전체에서 단어가 얼마나 독특한지에 따라 가중치를 부여함 |
-| 대치(Imputation) | "빈칸 채우기" | 결측값을 추정값(평균, 중앙값, 최빈값 또는 모델 예측값)으로 대체하는 작업 |
-| 피처 선택(Feature selection) | "좋지 않은 열 버리기" | 노이즈나 중복을 유발하는 피처를 제거하고, 타깃에 대한 신호가 있는 피처만 유지하는 작업 |
-| 상호 정보량(Mutual information) | "한 가지가 다른 것에 대해 얼마나 많은 정보를 주는지" | 변수 X를 관측함으로써 얻는 변수 Y의 불확실성 감소량을 나타내는 척도 |
-| 데이터 누수(Data leakage) | "의도치 않게 커닝하기" | 예측 시점에는 사용할 수 없는 정보를 학습 중에 사용하여, 거짓으로 낙관적인 결과를 초래하는 현상 |
+| 특성 공학(Feature engineering) | "새로운 열 만들기" | 모델이 패턴을 파악할 수 있도록 원시 데이터를 적절한 표현으로 변환하는 작업 |
+| 표준화(Standardization) | "정규화하기" | 평균을 빼고 표준편차로 나누어 특성의 평균을 0, 표준편차를 1로 맞추는 작업 |
+| 원-핫 인코딩(One-hot encoding) | "더미 변수 만들기" | 범주마다 하나의 이진 열을 생성하여, 각 행마다 정확히 하나의 열만 1이 되도록 하는 작업 |
+| 타깃 인코딩(Target encoding) | "정답을 사용해 인코딩하기" | 과적합을 방지하는 스무딩(smoothing)과 함께, 각 범주를 해당 범주의 평균 타깃값으로 대체하는 작업 |
+| TF-IDF | "고급 단어 카운트" | 단어 빈도(Term Frequency)와 역문서 빈도(Inverse Document Frequency)의 곱: 전체 말뭉치에서 단어가 얼마나 독특한지에 따라 가중치를 부여하는 기법 |
+| 결측값 대체(Imputation) | "빈칸 채우기" | 결측값을 추정값(평균, 중앙값, 최빈값 또는 모델 예측값)으로 대체하는 작업 |
+| 특성 선택(Feature selection) | "좋지 않은 열 버리기" | 노이즈나 중복을 유발하는 특성을 제거하고 타깃에 대한 유의미한 신호를 가진 특성만 남기는 작업 |
+| 상호 정보량(Mutual information) | "한 변수가 다른 변수에 대해 알려주는 정보량" | 변수 X를 관측함으로써 얻는 변수 Y의 불확실성 감소량을 측정하는 척도 |
+| 데이터 누출(Data leakage) | "실수로 커닝하기" | 예측 시점에는 알 수 없는 정보를 훈련 과정에서 사용하여 왜곡된 낙관적 결과를 초래하는 현상 |
 
 ## 추가 자료
 
-- [Feature Engineering and Selection (Max Kuhn & Kjell Johnson)](http://www.feat.engineering/) - 피처 엔지니어링 전반을 다루는 무료 온라인 도서
-- [scikit-learn Preprocessing Guide](https://scikit-learn.org/stable/modules/preprocessing.html) - 모든 표준 변환에 대한 실무 참고 자료
-- [Target Encoding Done Right (Micci-Barreca, 2001)](https://dl.acm.org/doi/10.1145/507533.507538) - 평활화를 적용한 타깃 인코딩에 관한 원저 논문
+- [Feature Engineering and Selection (Max Kuhn & Kjell Johnson)](http://www.feat.engineering/) - 특성 공학의 전반을 다루는 무료 온라인 도서
+- [scikit-learn Preprocessing Guide](https://scikit-learn.org/stable/modules/preprocessing.html) - 모든 표준 변환을 다루는 실무 레퍼런스
+- [Target Encoding Done Right (Micci-Barreca, 2001)](https://dl.acm.org/doi/10.1145/507533.507538) - 스무딩을 적용한 타깃 인코딩에 관한 원문 논문

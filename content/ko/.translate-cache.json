@@ -190,14 +190,14 @@
     "sha": "890e592523f62b14d6cefc31696b77c47afd43fa6a405dd3b4b4a843fd0577e9"
   },
   "phases/02-ml-fundamentals/04-decision-trees": {
-    "at": "2026-10-20T11:44:44Z",
+    "at": "2026-10-25T11:28:27Z",
     "model": "gemini-3.8-flash",
-    "sha": "4b0f504a762eee1962ec224f7ace1863c22051223116185151a1fe4a01d80546"
+    "sha": "e020962c727412c6d0263c9c2324210a6a20c1074a325d16d011d797bd8a812e"
   },
   "phases/02-ml-fundamentals/05-support-vector-machines": {
-    "at": "2026-10-20T11:48:41Z",
+    "at": "2026-10-25T11:40:01Z",
     "model": "gemini-3.8-flash",
-    "sha": "a863b633b409bb5be6360fb07ac35bf132d955b3d65a595f28de5d9f85097da8"
+    "sha": "ffd0796857de5f9cfbcb5e5c5396f3d07c8379585fc271502d2b06a285b7999e"
   },
   "phases/02-ml-fundamentals/06-knn-and-distances": {
     "at": "2026-10-20T11:56:31Z",
@@ -210,9 +210,9 @@
     "sha": "9f589f12b059d6d1b6044772c6479c01fbd0b7b330443145f31009f56828874d"
   },
   "phases/02-ml-fundamentals/08-feature-engineering": {
-    "at": "2026-10-21T11:44:03Z",
+    "at": "2026-10-25T11:48:57Z",
     "model": "gemini-3.8-flash",
-    "sha": "4b69623669fe49051971e28ec6e60f5fa84871f356cf311305400907ad5afd3b"
+    "sha": "ae02a8730059df0644e63a8810e10a8ab39b339db4cc37ed2b1e23587d818444"
   },
   "phases/02-ml-fundamentals/09-model-evaluation": {
     "at": "2026-10-21T11:44:56Z",
@@ -228,5 +228,15 @@
     "at": "2026-10-21T11:48:41Z",
     "model": "gemini-3.8-flash",
     "sha": "497158df5ec8f89881419cc43414a1a3dceb6ed23376dba300bdf93f04cde67b"
+  },
+  "phases/02-ml-fundamentals/12-hyperparameter-tuning": {
+    "at": "2026-10-25T11:59:11Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9f72e12d7734382f385eb5b5bdefb65f6286284f8483c448a9c548300ed949bb"
+  },
+  "phases/02-ml-fundamentals/13-ml-pipelines": {
+    "at": "2026-10-25T12:02:13Z",
+    "model": "gemini-3.8-flash",
+    "sha": "058d092b6ad38b5a9eaf4a3fc296aac5867d0e99e60ba40ce0cc20b7326820d9"
   }
 }
