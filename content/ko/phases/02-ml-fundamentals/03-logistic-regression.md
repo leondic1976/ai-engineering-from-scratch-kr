@@ -1,72 +1,72 @@
 ---
 title_en: "Logistic Regression"
 source: "phases/02-ml-fundamentals/03-logistic-regression"
-source_sha: "9853f595623003ac"
+source_sha: "890e592523f62b14"
 model: "gemini-3.8-flash"
-translated_at: "2026-10-20"
+translated_at: "2026-10-25"
 ---
-# 로지스틱 회귀 (Logistic Regression)
+# Logistic Regression
 
-> 로지스틱 회귀는 직선을 S자 곡선으로 변형하여 예/아니오 질문에 대한 답을 확률로 제시합니다.
+> 로지스틱 회귀(logistic regression)는 직선을 S자 곡선으로 구부려 예/아니오 질문에 확률로 답합니다.
 
 **유형:** Build (실습)
 **사용 언어:** Python
 **선수 레슨:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **소요 시간:** ~90분
 
-## 학습 목표
+## Learning Objectives
 
-- 시그모이드(sigmoid) 함수와 이진 교차 엔트로피(binary cross-entropy) 손실을 사용하여 밑바닥부터(from scratch) 로지스틱 회귀를 구현합니다.
-- 이진 분류를 위한 정밀도(precision), 재현율(recall), F1 점수(F1 score) 및 혼동 행렬(confusion matrix)을 계산하고 해석합니다.
-- 분류 문제에서 MSE가 실패하는 이유와 이진 교차 엔트로피가 볼록(convex) 비용 곡면을 형성하는 이유를 설명합니다.
-- 다중 클래스 분류를 위한 소프트맥스(softmax) 회귀 모델을 구축하고 임계값 튜닝(threshold tuning)의 트레이드오프를 평가합니다.
+- 시그모이드(sigmoid) 함수와 이진 크로스 엔트로피(binary cross-entropy) 손실을 사용하여 밑바닥부터 로지스틱 회귀를 구현합니다.
+- 이진 분류를 위한 정밀도(precision), 재현율(recall), F1 점수(F1 score), 혼동 행렬(confusion matrix)을 계산하고 해석합니다.
+- 분류 작업에서 MSE가 실패하는 이유와 이진 크로스 엔트로피가 볼록한(convex) 비용 곡면을 만들어내는 이유를 설명합니다.
+- 다중 클래스 분류를 위한 소프트맥스(softmax) 회귀 모델을 구축하고 임계값(threshold) 튜닝의 트레이드오프를 평가합니다.
 
-## 문제 정의
+## The Problem
 
-종양의 크기를 바탕으로 그것이 악성인지 양성인지를 예측하고자 합니다. 선형 회귀(linear regression)를 적용해 보면 0.3이나 1.7, 또는 -0.5와 같은 숫자가 출력됩니다. 이 숫자들은 무엇을 의미할까요? 1.7은 "매우 악성"이라는 뜻일까요? -0.5는 "매우 양성"이라는 뜻일까요? 선형 회귀는 범위 제한이 없는 숫자를 출력합니다. 하지만 분류(classification)에는 0과 1 사이로 제한된 확률과 '예' 또는 '아니오'라는 명확한 결정이 필요합니다.
+종양의 크기를 바탕으로 해당 종양이 악성인지 양성인지를 예측하고자 합니다. 선형 회귀(linear regression)를 시도해 보면, 0.3이나 1.7, 혹은 -0.5와 같은 숫자가 출력됩니다. 이 숫자들은 무엇을 의미할까요? 1.7은 "매우 악성"이라는 뜻일까요? -0.5는 "매우 양성"이라는 뜻일까요? 선형 회귀는 범위 제한이 없는 값을 출력합니다. 하지만 분류에는 0과 1 사이로 제한된 확률과 예/아니오라는 명확한 결정이 필요합니다.
 
-로지스틱 회귀는 이 문제를 해결합니다. 동일한 선형 결합($wx + b$)을 취한 뒤, 어떤 숫자든 (0, 1) 범위로 압축하는 시그모이드 함수를 통과시킵니다. 그 결과 출력값은 확률이 됩니다. 여기에 임계값(보통 0.5)을 설정하여 최종 결정을 내립니다.
+로지스틱 회귀가 이 문제를 해결합니다. 선형 회귀와 동일한 선형 결합($wx + b$)을 구한 뒤, 어떤 숫자든 (0, 1) 범위로 압축하는 시그모이드 함수를 통과시킵니다. 그 결과 출력값은 확률이 됩니다. 여기에 임계값(보통 0.5)을 설정하여 결정을 내립니다.
 
-로지스틱 회귀는 실무에서 가장 널리 사용되는 알고리즘 중 하나입니다. 이름에 '회귀'가 들어가지만, 회귀 알고리즘이 아니라 분류 알고리즘입니다. 이 이름은 모델 내부에서 사용하는 로지스틱(시그모이드) 함수에서 유래했습니다.
+로지스틱 회귀는 실무에서 가장 널리 사용되는 알고리즘 중 하나입니다. 이름과 달리 로지스틱 회귀는 회귀 알고리즘이 아니라 분류(classification) 알고리즘입니다. 이 이름은 모델 내부에서 사용하는 로지스틱(시그모이드) 함수에서 유래했습니다.
 
-## 핵심 개념
+## The Concept
 
-### 선형 회귀가 분류에서 실패하는 이유
+### Why Linear Regression Fails for Classification
 
-공부 시간을 바탕으로 합격/불합격(1/0)을 예측한다고 가정해 보겠습니다. 선형 회귀는 데이터를 관통하는 직선을 적합합니다:
+공부 시간에 따른 시험 합격/불합격(1/0)을 예측한다고 상상해 봅시다. 선형 회귀는 데이터 사이에 직선을 적합(fit)합니다.
 
 ```
 hours:  1   2   3   4   5   6   7   8   9   10
 actual: 0   0   0   0   1   1   1   1   1   1
 ```
 
-선형 적합을 사용하면 1시간 공부했을 때 -0.2, 10시간 공부했을 때 1.3과 같은 예측값이 나올 수 있습니다. 이러한 값은 확률이 아닙니다. 0보다 작거나 1보다 커지기 때문입니다. 더 심각한 문제는 경계에서 멀리 떨어진 단 하나의 이상치(outlier, 예: 50시간 공부한 사람)가 직선 전체를 끌어당겨 모든 샘플에 대한 예측을 왜곡할 수 있다는 점입니다.
+선형 적합은 공부 시간 1시간에 대해 -0.2, 10시간에 대해 1.3과 같은 예측을 출력할 수 있습니다. 이러한 값은 확률이 아닙니다. 0보다 작거나 1보다 커지기 때문입니다. 더 심각한 문제는, 단 하나의 이상치(outlier, 예: 50시간 동안 공부한 학생)가 직선 전체를 끌어당겨 다른 모든 데이터에 대한 예측을 바꿔놓을 수 있다는 점입니다.
 
-따라서 분류에는 다음과 같은 함수가 필요합니다:
+분류 작업에는 다음과 같은 특성을 지닌 함수가 필요합니다.
 - 0과 1 사이의 값(확률)을 출력해야 합니다.
-- 급격한 전환 구간(결정 경계, decision boundary)을 형성해야 합니다.
-- 경계에서 멀리 떨어진 이상치에 의해 왜곡되지 않아야 합니다.
+- 뚜렷한 전환 구간(결정 경계, decision boundary)을 형성해야 합니다.
+- 결정 경계에서 멀리 떨어진 이상치에 의해 왜곡되지 않아야 합니다.
 
-### 시그모이드 함수
+### The Sigmoid Function
 
-시그모이드 함수는 바로 이 역할을 수행합니다:
+시그모이드 함수가 정확히 이 역할을 수행합니다.
 
 ```math
 \sigma(z) = \frac{1}{1 + e^{-z}}
 ```
 
 특성:
-- $z$가 양수 방향으로 매우 크면, $\sigma(z)$는 1에 가까워집니다.
-- $z$가 음수 방향으로 매우 크면, $\sigma(z)$는 0에 가까워집니다.
+- $z$가 양의 방향으로 매우 크면, $\sigma(z)$은 1에 수렴합니다.
+- $z$가 음의 방향으로 매우 크면, $\sigma(z)$는 0에 수렴합니다.
 - $z = 0$일 때, $\sigma(z) = 0.5$입니다.
-- 출력값은 항상 0과 1 사이에 위치합니다.
+- 출력값은 항상 0과 1 사이에 있습니다.
 - 모든 지점에서 매끄럽고 미분 가능합니다.
 
-도함수는 $\sigma'(z) = \sigma(z) (1 - \sigma(z))$라는 편리한 형태를 가집니다. 덕분에 기울기(gradient)를 효율적으로 계산할 수 있습니다.
+도함수 형태도 매우 편리합니다: $\sigma'(z) = \sigma(z) (1 - \sigma(z))$. 덕분에 그래디언트 계산이 효율적입니다.
 
-### 로지스틱 회귀 = 선형 모델 + 시그모이드
+### Logistic Regression = Linear Model + Sigmoid
 
-이 모델은 선형 회귀와 동일하게 $z = wx + b$를 계산한 후, 시그모이드 함수를 적용합니다:
+모델은 선형 회귀와 동일하게 $z = wx + b$를 계산한 다음, 시그모이드 함수를 적용합니다.
 
 ```mermaid
 flowchart LR
@@ -77,27 +77,27 @@ flowchart LR
     D -->|No| N[Predict 0]
 ```
 
-출력값 $p$는 입력이 클래스 1에 속할 확률인 $P(y=1 \mid x)$로 해석됩니다. 결정 경계는 $wx + b = 0$가 되는 지점이며, 이때 시그모이드 출력값은 정확히 0.5가 됩니다.
+출력값 $p$은 입력이 클래스 1에 속할 확률인 $P(y=1 \mid x)$로 해석됩니다. 결정 경계는 $wx + b = 0$인 지점이며, 이때 시그모이드 출력값은 정확히 0.5가 됩니다.
 
-### 이진 교차 엔트로피 손실
+### Binary Cross-Entropy Loss
 
-로지스틱 회귀에는 MSE를 손실 함수로 사용할 수 없습니다. 시그모이드에 MSE를 적용하면 국소 최솟값(local minima)이 다수 존재하는 비볼록(non-convex) 비용 곡면이 형성되기 때문입니다. 대신 이진 교차 엔트로피(로그 손실, log loss)를 사용합니다:
+로지스틱 회귀에는 MSE를 사용할 수 없습니다. 시그모이드와 MSE를 함께 사용하면 여러 국소 최솟값(local minima)을 가진 비볼록(non-convex) 비용 곡면이 형성됩니다. 대신 이진 크로스 엔트로피(로그 손실, log loss)를 사용합니다.
 
 ```math
 \text{Loss} = -\frac{1}{n} \sum \left( y \log(p) + (1-y) \log(1-p) \right)
 ```
 
-작동 원리:
-- $y=1$이고 $p$이 1에 가까울 때: $\log(1) = 0$이므로 손실이 0에 가깝습니다 (정답, 낮은 비용).
-- $y=1$이고 $p$이 0에 가까울 때: $\log(0)$가 음의 무한대로 발산하므로 손실이 극도로 커집니다 (오답, 높은 비용).
-- $y=0$이고 $p$이 0에 가까울 때: $\log(1) = 0$이므로 손실이 0에 가깝습니다 (정답, 낮은 비용).
-- $y=0$이고 $p$이 1에 가까울 때: $\log(0)$가 음의 무한대로 발산하므로 손실이 극도로 커집니다 (오답, 높은 비용).
+이 손실 함수가 작동하는 원리는 다음과 같습니다.
+- $y=1$이고 $p$이 1에 가까울 때: $\log(1) = 0$이므로 손실은 0에 가깝습니다(올바른 예측, 낮은 비용).
+- $y=1$이고 $p$이 0에 가까울 때: $\log(0)$은 음의 무한대에 가까워지므로 손실이 매우 큽니다(잘못된 예측, 높은 비용).
+- $y=0$이고 $p$이 0에 가까울 때: $\log(1) = 0$이므로 손실은 0에 가깝습니다(올바른 예측, 낮은 비용).
+- $y=0$이고 $p$이 1에 가까울 때: $\log(0)$은 음의 무한대에 가까워지므로 손실이 매우 큽니다(잘못된 예측, 높은 비용).
 
-이 손실 함수는 로지스틱 회귀에 대해 볼록(convex) 함수이므로 단 하나의 전역 최솟값(global minimum)을 보장합니다.
+이 손실 함수는 로지스틱 회귀에 대해 볼록하므로, 모든 국소 최솟값이 전역 최솟값(global minimum)이 되며 경사 하강법(gradient descent)이 잘못된 최솟값에 갇히지 않습니다. 완전히 선형 분리 가능한(separable) 데이터의 경우 가중치가 커질수록 손실이 계속 감소하여 유한한 최솟값이 존재하지 않는데, L2 규제(regularization)를 추가하면 이 문제가 해결되어 최솟값이 유일해집니다.
 
-### 로지스틱 회귀의 경사 하강법
+### Gradient Descent for Logistic Regression
 
-시그모이드를 적용한 이진 교차 엔트로피의 기울기는 다음과 같이 간결한 형태를 갖습니다:
+시그모이드와 결합된 이진 크로스 엔트로피의 그래디언트는 깔끔한 형태를 띱니다.
 
 ```math
 \begin{aligned}
@@ -106,7 +106,7 @@ flowchart LR
 \end{aligned}
 ```
 
-이는 선형 회귀의 기울기 식과 형태가 동일해 보입니다. 차이점은 $p = wx + b$ 대신 $p = \sigma(wx + b)$가 사용된다는 점입니다. 시그모이드가 비선형성을 도입하지만, 기울기 업데이트 규칙 자체는 동일하게 유지됩니다.
+이 식은 선형 회귀의 그래디언트와 동일해 보입니다. 차이점은 $p = wx + b$ 대신 $p = \sigma(wx + b)$를 사용한다는 것입니다. 시그모이드 함수가 비선형성을 도입하지만, 그래디언트 업데이트 규칙 자체는 동일하게 유지됩니다.
 
 ```mermaid
 flowchart TD
@@ -119,72 +119,72 @@ flowchart TD
     F -->|Yes| G[Model trained]
 ```
 
-### 결정 경계
+### The Decision Boundary
 
-2차원 입력(두 개의 특성)에서 결정 경계는 다음을 만족하는 직선입니다:
+2차원 입력(두 개의 특성)에서 결정 경계는 다음을 만족하는 직선입니다.
 
 ```math
 w_1 x_1 + w_2 x_2 + b = 0
 ```
 
-직선의 한쪽에 있는 점들은 1로 분류되고, 다른 쪽에 있는 점들은 0으로 분류됩니다. 로지스틱 회귀는 항상 선형 결정 경계를 만듭니다. 곡선 형태의 경계가 필요하다면 다항 특성(polynomial features)을 추가하거나 비선형 모델을 사용해야 합니다.
+경계의 한쪽에 있는 점들은 1로 분류되고, 다른 쪽에 있는 점들은 0으로 분류됩니다. 로지스틱 회귀는 항상 선형 결정 경계를 생성합니다. 곡선 형태의 경계가 필요하다면 다항 특성(polynomial feature)을 추가하거나 비선형 모델을 사용해야 합니다.
 
-### 소프트맥스를 활용한 다중 클래스 분류
+### Multi-Class Classification with Softmax
 
-이진 로지스틱 회귀는 두 개의 클래스를 다룹니다. $k$개의 클래스를 분류할 때는 소프트맥스(softmax) 함수를 사용합니다:
+이진 로지스틱 회귀는 두 개의 클래스를 처리합니다. $k$개의 클래스를 다룰 때는 소프트맥스(softmax) 함수를 사용합니다.
 
 ```math
 \text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}
 ```
 
-각 클래스는 독립된 가중치 벡터를 갖습니다. 모델이 각 클래스에 대한 점수 $z_i$를 계산하면, 소프트맥스가 이 점수들을 합이 1이 되는 확률값으로 변환합니다. 최종 예측 클래스는 확률이 가장 높은 클래스로 선택됩니다.
+각 클래스는 고유한 가중치 벡터를 가집니다. 모델은 각 클래스에 대한 점수 $z_i$를 계산한 다음, 소프트맥스를 통해 점수들을 합이 1이 되는 확률로 변환합니다. 예측 클래스는 확률이 가장 높은 클래스가 됩니다.
 
-이때 손실 함수는 범주형 교차 엔트로피(categorical cross-entropy)가 됩니다:
+손실 함수는 카테고리컬 크로스 엔트로피(categorical cross-entropy)가 됩니다.
 
 ```math
 \text{Loss} = -\frac{1}{n} \sum \sum_k y_k \log(p_k)
 ```
 
-여기서 $y_k$는 실제 클래스에 대해서는 1이고, 다른 모든 클래스에 대해서는 0입니다(원-핫 인코딩, one-hot encoding).
+여기서 $y_k$는 실제 클래스에 대해서는 1이고 나머지 모든 클래스에 대해서는 0입니다(원-핫 인코딩, one-hot encoding).
 
-### 평가 지표
+### Evaluation Metrics
 
-정확도(accuracy)만으로는 모델 성능을 온전히 평가할 수 없습니다. 음성 95%, 양성 5%로 구성된 불균형 데이터셋에서는 무조건 음성으로만 예측해도 95%의 정확도를 얻지만, 이러한 모델은 실질적으로 아무 쓸모가 없습니다.
+정확도(accuracy) 하나만으로는 충분하지 않습니다. 음성이 95%, 양성이 5%인 데이터셋에서 항상 음성만 예측하는 모델은 95%의 정확도를 얻지만 아무 쓸모가 없습니다.
 
-**혼동 행렬(Confusion Matrix)**:
+**Confusion Matrix**:
 
-| | 예측 양성 (Predicted Positive) | 예측 음성 (Predicted Negative) |
+| | Predicted Positive | Predicted Negative |
 |---|---|---|
-| 실제 양성 (Actually Positive) | True Positive (TP) | False Negative (FN) |
-| 실제 음성 (Actually Negative) | False Positive (FP) | True Negative (TN) |
+| Actually Positive | True Positive (TP) | False Negative (FN) |
+| Actually Negative | False Positive (FP) | True Negative (TN) |
 
-**정밀도(Precision)**: 양성으로 예측한 샘플 중 실제로 양성인 비율은 얼마인가?
+**Precision**: 양성으로 예측한 것 중 실제 양성은 몇 개인가?
 ```math
 \text{Precision} = \frac{TP}{TP + FP}
 ```
 
-**재현율(Recall)** (민감도, Sensitivity): 실제 양성 샘플 중 모델이 올바르게 감지해 낸 비율은 얼마인가?
+**Recall** (Sensitivity, 재현율): 실제 양성 중 모델이 잡아낸 양성은 몇 개인가?
 ```math
 \text{Recall} = \frac{TP}{TP + FN}
 ```
 
-**F1 점수(F1 Score)**: 정밀도와 재현율의 조화 평균으로, 두 지표 간의 균형을 나타냅니다.
+**F1 Score**: 정밀도와 재현율의 조화 평균. 두 지표의 균형을 맞춥니다.
 ```math
 F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
 ```
 
-지표별 우선순위 기준:
-- **정밀도(Precision)**: 거짓 양성(false positive)의 비용이 큰 경우 (스팸 필터: 정상 이메일이 스팸으로 분류되어 차단되면 안 됨)
-- **재현율(Recall)**: 거짓 음성(false negative)의 비용이 큰 경우 (암 진단: 실제 악성 종양을 놓쳐서는 안 됨)
-- **F1 점수**: 정밀도와 재현율의 균형을 종합적으로 나타내는 단일 지표가 필요할 때
+지표 우선순위 결정 기준:
+- **Precision**: 거짓 양성(false positive)의 비용이 큰 경우(스팸 필터, 정상 이메일이 차단되어서는 안 됨)
+- **Recall**: 거짓 음성(false negative)의 비용이 큰 경우(암 검진, 종양을 놓쳐서는 안 됨)
+- **F1**: 단일화된 균형 잡힌 지표가 필요한 경우
 
 ```figure
 logistic-sigmoid
 ```
 
-## 직접 구현하기
+## Build It
 
-### 1단계: 시그모이드 함수 및 데이터 생성
+### Step 1: Sigmoid function and data generation
 
 ```python
 import random
@@ -221,7 +221,7 @@ for i in range(5):
     print(f"  Features: [{X[i][0]:.2f}, {X[i][1]:.2f}], Label: {y[i]}")
 ```
 
-### 2단계: 로지스틱 회귀 밑바닥부터 구현하기
+### Step 2: Logistic regression from scratch
 
 ```python
 class LogisticRegression:
@@ -287,7 +287,7 @@ print(f"Weights: [{model.weights[0]:.4f}, {model.weights[1]:.4f}]")
 print(f"Bias: {model.bias:.4f}")
 ```
 
-### 3단계: 혼동 행렬 및 평가 지표 밑바닥부터 구현하기
+### Step 3: Confusion matrix and metrics from scratch
 
 ```python
 class ClassificationMetrics:
@@ -335,7 +335,7 @@ metrics = ClassificationMetrics(y_test, y_pred_test)
 metrics.print_report()
 ```
 
-### 4단계: 결정 경계 분석
+### Step 4: Decision boundary analysis
 
 ```python
 print("\n=== Decision Boundary ===")
@@ -359,7 +359,7 @@ for point in test_points:
     print(f"  [{point[0]}, {point[1]}] -> prob={prob:.4f}, class={pred}")
 ```
 
-### 5단계: 소프트맥스를 사용한 다중 클래스 분류
+### Step 5: Multi-class with softmax
 
 ```python
 class SoftmaxRegression:
@@ -451,7 +451,7 @@ for i in range(5):
     print(f"  True: {y_test_3[i]}, Predicted: {pred}, Probs: [{', '.join(f'{p:.3f}' for p in probs)}]")
 ```
 
-### 6단계: 임계값 튜닝
+### Step 6: Threshold tuning
 
 ```python
 print("\n=== Threshold Tuning ===")
@@ -467,7 +467,7 @@ for t in thresholds:
     print(f"{t:>10.1f} {m.accuracy():>10.4f} {m.precision():>10.4f} {m.recall():>10.4f} {m.f1():>10.4f}")
 ```
 
-## 라이브러리 활용하기
+## Use It
 
 이제 scikit-learn을 사용하여 동일한 작업을 수행해 봅니다.
 
@@ -504,31 +504,31 @@ print(f"\nConfusion Matrix:\n{confusion_matrix(y_te, y_pred)}")
 print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 ```
 
-직접 밑바닥부터 구현한 모델도 동일한 결정 경계와 평가 지표를 산출합니다. scikit-learn은 다양한 솔버 옵션(liblinear, lbfgs, saga), 자동 규제(regularization), 다중 클래스 전략(one-vs-rest, multinomial), 수치 안정성(numerical stability) 최적화 기능을 추가로 제공합니다.
+밑바닥부터 직접 구현한 모델도 동일한 결정 경계와 지표를 산출합니다. Scikit-learn은 다양한 솔버 옵션(liblinear, lbfgs, saga), 자동 규제, 다중 클래스 전략(one-vs-rest, multinomial), 수치 안정성 최적화를 추가로 제공합니다.
 
-## 결과물 제출
+## Ship It
 
-이번 실습에서 작성한 결과물은 다음과 같습니다:
-- `code/logistic_regression.py` - 평가 지표를 포함하여 밑바닥부터 구현한 로지스틱 회귀
+이 레슨에서 생성한 결과물:
+- `code/logistic_regression.py` - 지표 계산을 포함하여 밑바닥부터 구현한 로지스틱 회귀
 ## 연습 문제
 
-1. 선형 분리가 불가능한(not linearly separable) 데이터셋(예: 두 개의 동심원)을 생성합니다. 로지스틱 회귀(logistic regression)를 학습시키고 제대로 분류하지 못하는 모습을 관찰합니다. 그런 다음 다항 특성($x_1^2, x_2^2, x_1 x_2$)을 추가하고 다시 학습시킵니다. 정확도가 향상됨을 확인합니다.
+1. 선형적으로 분리되지 않는(linearly separable) 데이터셋을 생성합니다(예: 두 개의 동심원). 로지스틱 회귀(logistic regression)를 학습시키고 제대로 분류하지 못하는 현상을 관찰합니다. 그런 다음 다항 특성($x_1^2, x_2^2, x_1 x_2$)을 추가하고 다시 학습시킵니다. 정확도가 향상됨을 확인합니다.
 2. 3개 클래스를 가진 softmax 모델을 위한 다중 클래스 혼동 행렬(confusion matrix)을 구현합니다. 클래스별 정밀도(precision)와 재현율(recall)을 계산합니다. 어떤 클래스가 가장 분류하기 어렵습니까?
-3. ROC 곡선(ROC curve)을 밑바닥부터 직접 구현합니다. 0부터 1까지 100개의 임곗값(threshold)에 대해 참 양성률(true positive rate)과 거짓 양성률(false positive rate)을 계산합니다. 사다리꼴 공식(trapezoidal rule)을 사용하여 AUC(곡선 아래 면적)를 구합니다.
+3. ROC 곡선(ROC curve)을 밑바닥부터 직접 구현합니다. 0부터 1까지 100개의 임계값(threshold)에 대해 참 긍정률(true positive rate)과 거짓 긍정률(false positive rate)을 계산합니다. 사다리꼴 공식(trapezoidal rule)을 사용하여 AUC(area under the curve)를 계산합니다.
 
 ## 핵심 용어
 
-| 용어 | 일반적인 표현 | 실제 의미 |
+| 용어 | 흔히 부르는 표현 | 실제 의미 |
 |------|----------------|----------------------|
-| 로지스틱 회귀(Logistic regression) | "분류를 위한 회귀" | 클래스 확률을 출력하기 위해 선형 모델 뒤에 시그모이드(sigmoid) 함수를 적용한 모델 |
+| 로지스틱 회귀(Logistic regression) | "분류를 위한 회귀" | 선형 모델 뒤에 시그모이드(sigmoid) 함수가 이어져 클래스 확률을 출력하는 모델 |
 | 시그모이드 함수(Sigmoid function) | "S자형 곡선" | 임의의 실수를 (0, 1) 범위로 매핑하는 함수 $1/(1+e^{-z})$ |
-| 이진 교차 엔트로피(Binary cross-entropy) | "로그 손실(Log loss)" | 잘못된 예측을 높은 확신으로 내놓았을 때 큰 페널티를 부여하는 손실 함수 $-[y \log(p) + (1-y) \log(1-p)]$ |
-| 결정 경계(Decision boundary) | "구분선" | 모델의 출력 확률이 0.5가 되어 예측 클래스가 나뉘는 경계면 |
+| 이진 교차 엔트로피(Binary cross-entropy) | "로그 손실(Log loss)" | 확신에 찬 잘못된 예측에 큰 페널티를 부여하는 손실 함수 $-[y \log(p) + (1-y) \log(1-p)]$ |
+| 결정 경계(Decision boundary) | "경계선" | 예측 클래스를 구분하며 모델의 출력 확률이 0.5가 되는 경계면 |
 | 소프트맥스(Softmax) | "다중 클래스 시그모이드" | 점수 벡터를 합이 1이 되는 확률 분포로 변환하는 함수 |
-| 정밀도(Precision) | "선택된 것 중 관련 있는 것의 비율" | 양성으로 예측된 항목 중 실제 양성인 비율인 $TP / (TP + FP)$ |
-| 재현율(Recall) | "관련 있는 것 중 선택된 것의 비율" | 실제 양성인 항목 중 모델이 올바르게 식별해 낸 비율인 $TP / (TP + FN)$ |
+| 정밀도(Precision) | "선택된 것 중 관련된 것의 비율" | 양성(positive)으로 예측한 것 중 실제 양성의 비율인 $TP / (TP + FP)$ |
+| 재현율(Recall) | "관련된 것 중 선택된 것의 비율" | 모델이 올바르게 찾아낸 실제 양성의 비율인 $TP / (TP + FN)$ |
 | F1 점수(F1 score) | "균형 잡힌 정확도" | 정밀도와 재현율의 조화 평균: $2PR / (P+R)$ |
-| 혼동 행렬(Confusion matrix) | "오차 분류표" | 각 클래스 쌍에 대한 TP, TN, FP, FN 수를 나타내는 표 |
-| 임곗값(Threshold) | "기준값(cutoff)" | 모델이 클래스 1로 예측하는 기준이 되는 확률값(기본값 0.5, 조정 가능) |
-| 원-핫 인코딩(One-hot encoding) | "범주를 위한 이진 열" | 클래스 $k$를 $k$ 위치만 1이고 나머지는 0인 벡터로 표현하는 방식 |
+| 혼동 행렬(Confusion matrix) | "오류 분석표" | 각 클래스 쌍에 대한 TP, TN, FP, FN 수를 나타내는 표 |
+| 임계값(Threshold) | "기준값" | 모델이 클래스 1로 예측하는 기준 확률값(기본값 0.5, 조정 가능) |
+| 원-핫 인코딩(One-hot encoding) | "범주형 데이터를 위한 이진 열" | 클래스 $k$을 $k$ 위치만 1이고 나머지는 0인 벡터로 표현하는 방식 |
 | 범주형 교차 엔트로피(Categorical cross-entropy) | "다중 클래스 로그 손실" | 원-핫 인코딩된 레이블을 사용하여 이진 교차 엔트로피를 $k$개 클래스로 확장한 손실 함수 |
