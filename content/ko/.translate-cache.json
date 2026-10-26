@@ -238,5 +238,10 @@
     "at": "2026-10-25T12:02:13Z",
     "model": "gemini-3.8-flash",
     "sha": "058d092b6ad38b5a9eaf4a3fc296aac5867d0e99e60ba40ce0cc20b7326820d9"
+  },
+  "phases/02-ml-fundamentals/14-naive-bayes": {
+    "at": "2026-10-26T22:48:14Z",
+    "model": "gemini-3.8-flash",
+    "sha": "c6a0a270697261df063484940432c6087e7d88026b4accbab468d2940b1f5c1d"
   }
 }
