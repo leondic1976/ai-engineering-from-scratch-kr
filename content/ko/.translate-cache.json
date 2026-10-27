@@ -243,5 +243,20 @@
     "at": "2026-10-26T22:48:14Z",
     "model": "gemini-3.8-flash",
     "sha": "c6a0a270697261df063484940432c6087e7d88026b4accbab468d2940b1f5c1d"
+  },
+  "phases/02-ml-fundamentals/15-time-series": {
+    "at": "2026-10-27T22:18:29Z",
+    "model": "gemini-3.8-flash",
+    "sha": "283264485d86ce061f74965f9afca110d52ea2b455e8a32302869cc21319f6e3"
+  },
+  "phases/02-ml-fundamentals/16-anomaly-detection": {
+    "at": "2026-10-27T22:23:53Z",
+    "model": "gemini-3.8-flash",
+    "sha": "511926f7ba6c9e974c5e5b3e0bb0603ee67934db7244824d97251c7ff075415a"
+  },
+  "phases/02-ml-fundamentals/17-imbalanced-data": {
+    "at": "2026-10-27T22:30:51Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9a9a88a93765cf18f82e7169fbd23b8ff429d8344ed75fbfb9889f218342d138"
   }
 }
