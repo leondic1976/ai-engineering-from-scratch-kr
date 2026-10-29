@@ -268,5 +268,10 @@
     "at": "2026-10-28T22:42:40Z",
     "model": "gemini-3.8-flash",
     "sha": "4e7a93c271f20f99fc9514f2e1dece8cd17051694dc554174ae533e23d404fa8"
+  },
+  "phases/02-ml-fundamentals/20-model-monitoring-and-drift": {
+    "at": "2026-10-29T22:47:46Z",
+    "model": "gemini-3.8-flash",
+    "sha": "67ed1a1ed2ff0330085ca582c4068f307318a126ad1b6c591ce56a7022bfa082"
   }
 }
