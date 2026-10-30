@@ -273,5 +273,30 @@
     "at": "2026-10-29T22:47:46Z",
     "model": "gemini-3.8-flash",
     "sha": "67ed1a1ed2ff0330085ca582c4068f307318a126ad1b6c591ce56a7022bfa082"
+  },
+  "phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew": {
+    "at": "2026-10-30T12:54:49Z",
+    "model": "gemini-3.8-flash",
+    "sha": "4d63c14290d143ba7850ae4a6a15c3f6db968e2f9a3e1215c853c4e83cc623a5"
+  },
+  "phases/03-deep-learning-core/01-the-perceptron": {
+    "at": "2026-10-30T13:02:12Z",
+    "model": "gemini-3.8-flash",
+    "sha": "29d3bb53bedc92067c1a2f571f619bf1d9b58e797ce547798b1154f9e739a8e7"
+  },
+  "phases/03-deep-learning-core/02-multi-layer-networks": {
+    "at": "2026-10-30T13:20:55Z",
+    "model": "gemini-3.8-flash",
+    "sha": "f523e8b9524a7035ec1f8725ac7181bc0b4bc88d6f00643542101123f46c8afb"
+  },
+  "phases/03-deep-learning-core/03-backpropagation": {
+    "at": "2026-10-30T13:25:08Z",
+    "model": "gemini-3.8-flash",
+    "sha": "921c0e2dc63e349da7cb0863a4ef8586207bd13198899704fce19ae804ee9de9"
+  },
+  "phases/03-deep-learning-core/04-activation-functions": {
+    "at": "2026-10-30T13:37:57Z",
+    "model": "gemini-3.8-flash",
+    "sha": "ed99907cec27dbee8438480e4d905ae77e1afc46c3773fb81ee1f80ef110f7f9"
   }
 }
