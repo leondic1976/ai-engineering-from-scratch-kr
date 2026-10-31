@@ -298,5 +298,30 @@
     "at": "2026-10-30T13:37:57Z",
     "model": "gemini-3.8-flash",
     "sha": "ed99907cec27dbee8438480e4d905ae77e1afc46c3773fb81ee1f80ef110f7f9"
+  },
+  "phases/03-deep-learning-core/05-loss-functions": {
+    "at": "2026-10-31T21:33:43Z",
+    "model": "gemini-3.8-flash",
+    "sha": "96c8ecb9a53e7e139c347cd0c8ffbf4193550eaae2ba3a0426157eba0bf84e95"
+  },
+  "phases/03-deep-learning-core/06-optimizers": {
+    "at": "2026-10-31T21:37:49Z",
+    "model": "gemini-3.8-flash",
+    "sha": "9c62d91e8e24f446ebee788daecfbcefafbaec8b40d44a83ccbf6077b27a52af"
+  },
+  "phases/03-deep-learning-core/07-regularization": {
+    "at": "2026-10-31T21:40:54Z",
+    "model": "gemini-3.8-flash",
+    "sha": "84ad718024f20861c25fa6394d9b87b1e480bf0bce5a3c278920fc527fbaf0d7"
+  },
+  "phases/03-deep-learning-core/08-weight-initialization": {
+    "at": "2026-10-31T21:44:22Z",
+    "model": "gemini-3.8-flash",
+    "sha": "8e248147d6007865cfc1f04452d4f850d3d3e4c99a0217c0220e9f92373bcb1e"
+  },
+  "phases/03-deep-learning-core/09-learning-rate-schedules": {
+    "at": "2026-10-31T21:47:39Z",
+    "model": "gemini-3.8-flash",
+    "sha": "3c620f39d741127312a99239911de117781001a138d2264fac99bc3debbb1268"
   }
 }
