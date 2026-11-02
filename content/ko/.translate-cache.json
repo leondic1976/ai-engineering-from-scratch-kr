@@ -363,5 +363,10 @@
     "at": "2026-11-01T14:02:56Z",
     "model": "gemini-3.8-flash",
     "sha": "0af8e07488ade00c322b681d8889a968987dfe40b0f61180a10533eece8a9571"
+  },
+  "phases/04-computer-vision/05-transfer-learning": {
+    "at": "2026-11-02T06:00:27Z",
+    "model": "gemini-3.8-flash",
+    "sha": "a4f6aae738351e23e59a2e1e7e623dcdd80619cb761e940fe70753c0f6621691"
   }
 }
