@@ -368,5 +368,10 @@
     "at": "2026-11-02T06:00:27Z",
     "model": "gemini-3.8-flash",
     "sha": "a4f6aae738351e23e59a2e1e7e623dcdd80619cb761e940fe70753c0f6621691"
+  },
+  "phases/04-computer-vision/06-object-detection-yolo": {
+    "at": "2026-11-07T21:53:27Z",
+    "model": "gemini-3.8-flash",
+    "sha": "05a0492e3e9dfa7a9741012eff04bf01bfb006cba332c8ac020b1edb1cbdb8bb"
   }
 }
