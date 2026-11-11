@@ -60,9 +60,9 @@
     "sha": "2c8060d42a1115002a602a1db7241eb5338a7169661c238163c16c5653136513"
   },
   "phases/00-setup-and-tooling/13-python-for-ai-engineering": {
-    "at": "2026-10-16T21:05:28Z",
+    "at": "2026-11-11T06:09:54Z",
     "model": "gemini-3.8-flash",
-    "sha": "f8995bff8d2189e09fc41ec32c9eb6594653e1f19a9053d1c77c7abd8d41b938"
+    "sha": "ae258f2f5ac9b2bfd395d285699082537b53e9796368719c3d614e6954bca009"
   },
   "phases/01-math-foundations/01-linear-algebra-intuition": {
     "at": "2026-10-23T11:50:43Z",
@@ -120,19 +120,19 @@
     "sha": "e6d5cdb8721a8d7d4b2062f6a4da5946123d03b3f6e72e7d2225827e2c37fd23"
   },
   "phases/01-math-foundations/12-tensor-operations": {
-    "at": "2026-10-18T11:06:05Z",
+    "at": "2026-11-11T06:10:53Z",
     "model": "gemini-3.8-flash",
-    "sha": "8f37a3ac0484d015c9ba0ee87bbc9d9c60fe22c05f1abe7a2e6b4f83bf71dce1"
+    "sha": "07b6d7983ec360ddce4178a0064be90ad8a7e6375d11ecb4637c3efc614f182d"
   },
   "phases/01-math-foundations/13-numerical-stability": {
-    "at": "2026-10-23T17:13:32Z",
+    "at": "2026-11-11T06:17:58Z",
     "model": "gemini-3.8-flash",
-    "sha": "0a2ed11f1728142676a900ccd812099c78e4429155692ca22d0b27aafd94c2e6"
+    "sha": "611df7b0a07db308dad6e0e7830ab796c2f9801964a3a1aeb88c9f40526b3752"
   },
   "phases/01-math-foundations/14-norms-and-distances": {
-    "at": "2026-10-24T04:35:15Z",
+    "at": "2026-11-11T06:20:56Z",
     "model": "gemini-3.8-flash",
-    "sha": "12f5a9c47e8c915d8e470b7426c03f7ce3dbe3d391f0af127438e95e7635d716"
+    "sha": "b680d4daed465667166c76e5cc1b4e2a1b2ab2332ee584b2562d495e8adeb7d7"
   },
   "phases/01-math-foundations/15-statistics-for-ml": {
     "at": "2026-10-18T11:09:31Z",
