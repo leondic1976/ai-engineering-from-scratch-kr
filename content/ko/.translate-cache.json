@@ -155,19 +155,19 @@
     "sha": "b85edfa04ef99dc140cfdece3fccae676a13b7d2d9fbbc900d3f94c29430f804"
   },
   "phases/01-math-foundations/19-complex-numbers": {
-    "at": "2026-10-19T13:11:12Z",
+    "at": "2026-11-17T07:57:33Z",
     "model": "gemini-3.8-flash",
-    "sha": "a08ab16aeae18285cfde9f8156502ef7c6eda2f72a4ee38b0e514806bee80e45"
+    "sha": "4a8ab5a6d4885e98555979cdd01d5de3701eecf7018678dd835f45a5aeba430b"
   },
   "phases/01-math-foundations/20-fourier-transform": {
-    "at": "2026-10-24T11:28:44Z",
+    "at": "2026-11-17T08:00:26Z",
     "model": "gemini-3.8-flash",
-    "sha": "cfe858731f5cdeadd7047837a44510d797db5009cce9a8a9d98359ac42db2da4"
+    "sha": "85708528263fd9c85a699ec1967dc4c03c5b1456fa60f846753026703b386883"
   },
   "phases/01-math-foundations/21-graph-theory": {
-    "at": "2026-10-24T11:33:17Z",
+    "at": "2026-11-17T08:01:34Z",
     "model": "gemini-3.8-flash",
-    "sha": "5752ed6f872ea10f2dd68a5ef93766f214b3ed60c4ca786006d0c90aae1506fe"
+    "sha": "15e51474d311beb51cbda6d860b9b14ec3e83ea6d244fc2bcc5521d6dc9b5b7b"
   },
   "phases/01-math-foundations/22-stochastic-processes": {
     "at": "2026-10-24T11:38:06Z",
@@ -180,19 +180,19 @@
     "sha": "a81964a035da5a6ed3e69d48a66caea2d02d7cbe28d0e3bd573069fab831eef0"
   },
   "phases/02-ml-fundamentals/02-linear-regression": {
-    "at": "2026-10-20T11:37:17Z",
+    "at": "2026-11-17T08:03:03Z",
     "model": "gemini-3.8-flash",
-    "sha": "59d2f3f919657d7770e71eb25aaef772f5d2de89bd46bc3749eb7f03d5daaa3f"
+    "sha": "1a0efda804690ae0a9d695c39f01f3f5a13e8f970e32d2ae8f767ce13019744c"
   },
   "phases/02-ml-fundamentals/03-logistic-regression": {
-    "at": "2026-10-25T04:38:42Z",
+    "at": "2026-11-17T08:04:44Z",
     "model": "gemini-3.8-flash",
-    "sha": "890e592523f62b14d6cefc31696b77c47afd43fa6a405dd3b4b4a843fd0577e9"
+    "sha": "45a90a012447f086f062a721c4ca524e272f7c8ae1e863ca405845bc0551de38"
   },
   "phases/02-ml-fundamentals/04-decision-trees": {
-    "at": "2026-10-25T11:28:27Z",
+    "at": "2026-11-17T08:06:08Z",
     "model": "gemini-3.8-flash",
-    "sha": "e020962c727412c6d0263c9c2324210a6a20c1074a325d16d011d797bd8a812e"
+    "sha": "f14b973c84f94a98f69a96036151d5f780c58b332e418c1ff920b5f008e835ef"
   },
   "phases/02-ml-fundamentals/05-support-vector-machines": {
     "at": "2026-10-25T11:40:01Z",
@@ -200,9 +200,9 @@
     "sha": "ffd0796857de5f9cfbcb5e5c5396f3d07c8379585fc271502d2b06a285b7999e"
   },
   "phases/02-ml-fundamentals/06-knn-and-distances": {
-    "at": "2026-10-20T11:56:31Z",
+    "at": "2026-11-17T08:06:40Z",
     "model": "gemini-3.8-flash",
-    "sha": "bff69e9324c6c54ef76f589965a4f3df5ba5ccbbcbfad26550bc817ec1a90c74"
+    "sha": "0fff81d1a1ae2029c4c8db7a20f11c7b5711c24ba25ce4e23bfb70ab450a82d4"
   },
   "phases/02-ml-fundamentals/07-unsupervised-learning": {
     "at": "2026-10-20T17:04:21Z",
