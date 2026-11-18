@@ -205,9 +205,9 @@
     "sha": "0fff81d1a1ae2029c4c8db7a20f11c7b5711c24ba25ce4e23bfb70ab450a82d4"
   },
   "phases/02-ml-fundamentals/07-unsupervised-learning": {
-    "at": "2026-10-20T17:04:21Z",
+    "at": "2026-11-18T07:21:18Z",
     "model": "gemini-3.8-flash",
-    "sha": "9f589f12b059d6d1b6044772c6479c01fbd0b7b330443145f31009f56828874d"
+    "sha": "edffa5288ffe39f2a850c11366be002b17d8d20dc5e823f5e1f694b74ca72d66"
   },
   "phases/02-ml-fundamentals/08-feature-engineering": {
     "at": "2026-10-25T11:48:57Z",
