@@ -210,9 +210,9 @@
     "sha": "edffa5288ffe39f2a850c11366be002b17d8d20dc5e823f5e1f694b74ca72d66"
   },
   "phases/02-ml-fundamentals/08-feature-engineering": {
-    "at": "2026-10-25T11:48:57Z",
+    "at": "2026-11-19T07:24:46Z",
     "model": "gemini-3.8-flash",
-    "sha": "ae02a8730059df0644e63a8810e10a8ab39b339db4cc37ed2b1e23587d818444"
+    "sha": "2e66e91a399ba4298696ee25def5b85ac73d39e8e4607c056b6a3cb7a6f4f49c"
   },
   "phases/02-ml-fundamentals/09-model-evaluation": {
     "at": "2026-10-21T11:44:56Z",
@@ -265,9 +265,9 @@
     "sha": "292bda694502d73199356b998ca3f430bac934a99b7d75bf77417bca94e091cb"
   },
   "phases/02-ml-fundamentals/19-ml-system-design": {
-    "at": "2026-10-28T22:42:40Z",
+    "at": "2026-11-19T07:50:09Z",
     "model": "gemini-3.8-flash",
-    "sha": "4e7a93c271f20f99fc9514f2e1dece8cd17051694dc554174ae533e23d404fa8"
+    "sha": "0b2990f87b178f729150304e88c32f6b41c315bfd7d0ed30ba84c3654c9be9b7"
   },
   "phases/02-ml-fundamentals/20-model-monitoring-and-drift": {
     "at": "2026-10-29T22:47:46Z",
