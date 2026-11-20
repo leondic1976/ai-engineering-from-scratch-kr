@@ -270,19 +270,19 @@
     "sha": "0b2990f87b178f729150304e88c32f6b41c315bfd7d0ed30ba84c3654c9be9b7"
   },
   "phases/02-ml-fundamentals/20-model-monitoring-and-drift": {
-    "at": "2026-10-29T22:47:46Z",
+    "at": "2026-11-20T07:16:15Z",
     "model": "gemini-3.8-flash",
-    "sha": "67ed1a1ed2ff0330085ca582c4068f307318a126ad1b6c591ce56a7022bfa082"
+    "sha": "c7d059e55efd1e93278f60e2b3a05f5448c9e3016176ce8340e47baff1e1de46"
   },
   "phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew": {
-    "at": "2026-10-30T12:54:49Z",
+    "at": "2026-11-20T07:23:36Z",
     "model": "gemini-3.8-flash",
-    "sha": "4d63c14290d143ba7850ae4a6a15c3f6db968e2f9a3e1215c853c4e83cc623a5"
+    "sha": "7858b272d2c426e9a48c1d023645e8e010b8d5d89f72c3e3b09a232f8a5f4e61"
   },
   "phases/03-deep-learning-core/01-the-perceptron": {
-    "at": "2026-10-30T13:02:12Z",
+    "at": "2026-11-20T07:38:03Z",
     "model": "gemini-3.8-flash",
-    "sha": "29d3bb53bedc92067c1a2f571f619bf1d9b58e797ce547798b1154f9e739a8e7"
+    "sha": "9155cfee7521cb5f07332b038bddb52055da2297baf90a2ec566de3210f4c1ba"
   },
   "phases/03-deep-learning-core/02-multi-layer-networks": {
     "at": "2026-10-30T13:20:55Z",
